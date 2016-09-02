@@ -1,4 +1,4 @@
-package com.daksh.tmdbsample.data.remote.util;
+package com.daksh.tmdbsample.data.remote.interceptor;
 
 import java.io.IOException;
 
@@ -10,11 +10,11 @@ import okhttp3.Response;
 /**
  * Created by daksh on 03-Sep-16.
  */
-public class ApiKeyInterceptor implements Interceptor {
+public class ApiKeyInsertionInterceptor implements Interceptor {
 
     private final String apiKey;
 
-    public ApiKeyInterceptor(String apiKey) {
+    public ApiKeyInsertionInterceptor(String apiKey) {
         this.apiKey = apiKey;
     }
 

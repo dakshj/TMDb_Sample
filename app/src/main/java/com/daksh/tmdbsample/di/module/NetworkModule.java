@@ -2,11 +2,13 @@ package com.daksh.tmdbsample.di.module;
 
 import com.daksh.tmdbsample.BuildConfig;
 import com.daksh.tmdbsample.data.remote.MovieDbApi;
-import com.daksh.tmdbsample.data.remote.util.ApiKeyInterceptor;
+import com.daksh.tmdbsample.data.remote.interceptor.ApiKeyInsertionInterceptor;
+import com.daksh.tmdbsample.data.remote.interceptor.LanguageCodeInsertionInterceptor;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
@@ -37,8 +39,20 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    ApiKeyInterceptor provideApiKeyInterceptor() {
-        return new ApiKeyInterceptor(apiKey);
+    ApiKeyInsertionInterceptor provideApiKeyInterceptor() {
+        return new ApiKeyInsertionInterceptor(apiKey);
+    }
+
+    @Provides
+    @Singleton
+    Locale provideLocale() {
+        return Locale.getDefault();
+    }
+
+    @Provides
+    @Singleton
+    LanguageCodeInsertionInterceptor provideLanguageCodeInsertionInterceptor(Locale locale) {
+        return new LanguageCodeInsertionInterceptor(locale.getISO3Language());
     }
 
     @Provides
@@ -58,13 +72,15 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideOkHttpClient(ApiKeyInterceptor apiKeyInterceptor,
+    OkHttpClient provideOkHttpClient(ApiKeyInsertionInterceptor apiKeyInsertionInterceptor,
+            LanguageCodeInsertionInterceptor languageCodeInsertionInterceptor,
             HttpLoggingInterceptor httpLoggingInterceptor) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
-                .addInterceptor(apiKeyInterceptor);
+                .addInterceptor(apiKeyInsertionInterceptor)
+                .addInterceptor(languageCodeInsertionInterceptor);
 
         if (BuildConfig.DEBUG) {
             builder.addInterceptor(httpLoggingInterceptor);

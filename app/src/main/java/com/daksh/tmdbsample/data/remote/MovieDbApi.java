@@ -5,6 +5,7 @@ import com.daksh.tmdbsample.data.model.Movie;
 import java.util.List;
 
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -13,8 +14,8 @@ import rx.Observable;
 public interface MovieDbApi {
 
     @GET("/movie/popular")
-    Observable<List<Movie>> popular();
+    Observable<List<Movie>> popular(@Query("page") Integer page);
 
     @GET("/movie/top_rated")
-    Observable<List<Movie>> topRated();
+    Observable<List<Movie>> topRated(@Query("page") Integer page);
 }
