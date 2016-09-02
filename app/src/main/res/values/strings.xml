@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">TMDb Sample</string>
+    <string name="title_movie_detail">Movie Detail</string>
+</resources>
