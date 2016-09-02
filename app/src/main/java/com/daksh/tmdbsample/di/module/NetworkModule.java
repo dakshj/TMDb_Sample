@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 
+import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -25,6 +26,8 @@ import timber.log.Timber;
 /**
  * Created by daksh on 03-Sep-16.
  */
+
+@Module
 public class NetworkModule {
 
     public static final int TIMEOUT = 60;
