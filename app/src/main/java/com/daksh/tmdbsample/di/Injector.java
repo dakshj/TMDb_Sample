@@ -23,7 +23,7 @@ public enum Injector {
         return appComponent;
     }
 
-    public AppComponent getApplicationComponent() {
+    public AppComponent getAppComponent() {
         return appComponent;
     }
 }
