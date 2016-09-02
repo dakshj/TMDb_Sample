@@ -6,4 +6,6 @@ package com.daksh.tmdbsample.base;
 public interface BasePresenter {
 
     void start();
+
+    void goBack();
 }
