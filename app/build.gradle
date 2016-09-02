@@ -26,6 +26,7 @@ android {
         }
         Development_ {
             buildConfigField "boolean", "IS_PRODUCTION", "false"
+            buildConfigField 'String', 'BASE_URL', '"http://api.themoviedb.org/3"'
             buildConfigField 'String', 'API_KEY', '"3f41e7a0addc26031fdb06aa1c4b6bc0"'
         }
     }
