@@ -1,4 +1,4 @@
-package com.daksh.tmdbsample.data.remote;
+package com.daksh.tmdbsample.data.source.remote;
 
 import com.daksh.tmdbsample.data.model.Movie;
 

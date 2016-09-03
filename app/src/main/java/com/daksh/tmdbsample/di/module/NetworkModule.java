@@ -1,9 +1,9 @@
 package com.daksh.tmdbsample.di.module;
 
 import com.daksh.tmdbsample.BuildConfig;
-import com.daksh.tmdbsample.data.remote.MovieDbApi;
-import com.daksh.tmdbsample.data.remote.interceptor.ApiKeyInsertionInterceptor;
-import com.daksh.tmdbsample.data.remote.interceptor.LanguageCodeInsertionInterceptor;
+import com.daksh.tmdbsample.data.source.remote.MovieDbApi;
+import com.daksh.tmdbsample.data.source.remote.interceptor.ApiKeyInsertionInterceptor;
+import com.daksh.tmdbsample.data.source.remote.interceptor.LanguageCodeInsertionInterceptor;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

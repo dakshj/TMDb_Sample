@@ -1,4 +1,4 @@
-package com.daksh.tmdbsample.data.remote.interceptor;
+package com.daksh.tmdbsample.data.source.remote.interceptor;
 
 import java.io.IOException;
 
