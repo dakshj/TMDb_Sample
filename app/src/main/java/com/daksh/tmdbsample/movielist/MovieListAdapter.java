@@ -11,6 +11,7 @@ import com.daksh.tmdbsample.R;
 import com.daksh.tmdbsample.data.model.Movie;
 import com.daksh.tmdbsample.databinding.MovieListItemBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,13 +27,13 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     public MovieListAdapter(@NonNull ItemClickListener itemClickListener, boolean twoPane) {
         this.itemClickListener = itemClickListener;
         this.twoPane = twoPane;
+        movies = new ArrayList<>();
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        MovieListItemBinding B =
-                DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
-                        R.layout.movie_list_item, parent, false);
+        MovieListItemBinding B = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
+                R.layout.movie_list_item, parent, false);
         return new ViewHolder(B, itemClickListener);
     }
 
@@ -44,21 +45,21 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     @Override
     public int getItemCount() {
+        if (movies == null) {
+            return 0;
+        }
+
         return movies.size();
     }
 
-    public Movie getItem(int position) {
-        return movies.get(position);
-    }
-
-    public void setMovies(List<Movie> movies) {
+    public void setMovies(@NonNull List<Movie> movies) {
         this.movies = movies;
-        //TODO
+        notifyItemRangeInserted(0, movies.size());
     }
 
-    public void addMovies(List<Movie> movies) {
+    public void addMovies(@NonNull List<Movie> movies) {
         this.movies.addAll(movies);
-        //TODO
+        notifyItemRangeInserted(getItemCount(), movies.size());
     }
 
     public boolean isTwoPane() {
@@ -71,14 +72,12 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private final MovieListItemBinding B;
         private final ItemClickListener itemClickListener;
         private Movie movie;
 
         public ViewHolder(@NonNull MovieListItemBinding B,
                 @NonNull ItemClickListener itemClickListener) {
             super(B.getRoot());
-            this.B = B;
             this.itemClickListener = itemClickListener;
             itemView.setOnClickListener(this);
         }
