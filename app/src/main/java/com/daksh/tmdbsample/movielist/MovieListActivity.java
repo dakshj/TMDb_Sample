@@ -3,6 +3,7 @@ package com.daksh.tmdbsample.movielist;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 
 import com.daksh.tmdbsample.R;
 import com.daksh.tmdbsample.base.BaseActivity;
@@ -19,18 +20,40 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
 
     private boolean twoPane;
     private ActivityMovieListBinding B;
+    private MovieListAdapter adapter;
+    private MovieListPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         B = DataBindingUtil.setContentView(this, R.layout.activity_movie_list);
 
-        setSupportActionBar(B.toolbar);
-        B.toolbar.setTitle(getTitle());
-
         if (B.layoutMovieList.movieDetailContainer != null) {
             setTwoPane(true);
         }
+
+        setSupportActionBar(B.toolbar);
+        B.toolbar.setTitle(getTitle());
+
+        setUpGrid();
+    }
+
+    private void setUpGrid() {
+        adapter = new MovieListAdapter(new MovieListAdapter.ItemClickListener() {
+            @Override
+            public void onItemClicked(Movie movie) {
+                presenter.openMovieDetails(movie);
+            }
+        });
+
+        B.layoutMovieList.gridMovies.setLayoutManager(
+                new GridLayoutManager(this, GridLayoutManager.DEFAULT_SPAN_COUNT));
+        B.layoutMovieList.gridMovies.setAdapter(adapter);
+    }
+
+    @Override
+    protected void instantiatePresenter() {
+        presenter = new MovieListPresenter();
     }
 
     @Override
