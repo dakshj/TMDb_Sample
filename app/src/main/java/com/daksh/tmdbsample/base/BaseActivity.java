@@ -18,5 +18,5 @@ public abstract class BaseActivity extends AppCompatActivity {
         injectActivity(Injector.INSTANCE.getAppComponent());
     }
 
-    public abstract void injectActivity(AppComponent applicationComponent);
+    public abstract void injectActivity(AppComponent appComponent);
 }

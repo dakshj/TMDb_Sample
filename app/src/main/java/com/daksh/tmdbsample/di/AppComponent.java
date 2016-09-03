@@ -4,6 +4,7 @@ import com.daksh.tmdbsample.app.TmdbApplication;
 import com.daksh.tmdbsample.di.module.AppModule;
 import com.daksh.tmdbsample.di.module.NetworkModule;
 import com.daksh.tmdbsample.di.module.StorageModule;
+import com.daksh.tmdbsample.movielist.MovieListActivity;
 
 import javax.inject.Singleton;
 
@@ -22,4 +23,6 @@ import dagger.Component;
 public interface AppComponent {
 
     void inject(TmdbApplication application);
+
+    void inject(MovieListActivity movieListActivity);
 }
