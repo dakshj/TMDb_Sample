@@ -40,7 +40,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.movie = movies.get(position);
-        //TODO Load image using Picasso
+        holder.B.setMovie(holder.movie);
     }
 
     @Override
@@ -72,12 +72,15 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        @NonNull
+        private final MovieListItemBinding B;
         private final ItemClickListener itemClickListener;
         private Movie movie;
 
         public ViewHolder(@NonNull MovieListItemBinding B,
                 @NonNull ItemClickListener itemClickListener) {
             super(B.getRoot());
+            this.B = B;
             this.itemClickListener = itemClickListener;
             itemView.setOnClickListener(this);
         }

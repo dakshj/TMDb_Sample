@@ -1,9 +1,12 @@
 package com.daksh.tmdbsample.data.model;
 
+import android.databinding.BindingAdapter;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.widget.ImageView;
 
 import com.google.gson.annotations.SerializedName;
+import com.squareup.picasso.Picasso;
 
 import java.util.Date;
 
@@ -47,6 +50,14 @@ public class Movie implements Parcelable {
         this.userRating = in.readDouble();
         long tmpReleaseDate = in.readLong();
         this.releaseDate = tmpReleaseDate == -1 ? null : new Date(tmpReleaseDate);
+    }
+
+    @BindingAdapter({"bind:imageUrl"})
+    public static void loadImage(ImageView view, String imageUrl) {
+        //TODO add placeholder
+        Picasso.with(view.getContext())
+                .load(imageUrl)
+                .into(view);
     }
 
     public String getTitle() {
