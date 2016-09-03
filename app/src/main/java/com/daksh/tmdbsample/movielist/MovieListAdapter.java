@@ -21,12 +21,10 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     @NonNull
     private final ItemClickListener itemClickListener;
-    private final boolean twoPane;
     private List<Movie> movies;
 
-    public MovieListAdapter(@NonNull ItemClickListener itemClickListener, boolean twoPane) {
+    public MovieListAdapter(@NonNull ItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
-        this.twoPane = twoPane;
         movies = new ArrayList<>();
     }
 
@@ -60,10 +58,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     public void addMovies(@NonNull List<Movie> movies) {
         this.movies.addAll(movies);
         notifyItemRangeInserted(getItemCount(), movies.size());
-    }
-
-    public boolean isTwoPane() {
-        return twoPane;
     }
 
     public interface ItemClickListener {

@@ -94,6 +94,6 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
                     startActivity(intent);
                 }
             }
-        }, isTwoPane());
+        });
     }
 }
