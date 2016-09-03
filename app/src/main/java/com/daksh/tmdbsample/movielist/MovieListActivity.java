@@ -43,11 +43,11 @@ public class MovieListActivity extends AppCompatActivity {
             }
         });
 
-        View recyclerView = findViewById(R.id.movie_list);
+        View recyclerView = findViewById(R.id.listMovie);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
 
-        if (findViewById(R.id.movie_detail_container) != null) {
+        if (findViewById(R.id.movieDetailContainer) != null) {
             setTwoPane(true);
         }
     }
@@ -95,7 +95,7 @@ public class MovieListActivity extends AppCompatActivity {
                         MovieDetailFragment fragment = new MovieDetailFragment();
                         fragment.setArguments(arguments);
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.movie_detail_container, fragment)
+                                .replace(R.id.movieDetailContainer, fragment)
                                 .commit();
                     } else {
                         Context context = v.getContext();
