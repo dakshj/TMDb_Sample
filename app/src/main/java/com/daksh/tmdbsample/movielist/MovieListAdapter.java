@@ -52,7 +52,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     public void setMovies(@NonNull List<Movie> movies) {
         this.movies = movies;
-        notifyItemRangeInserted(0, movies.size());
+        notifyDataSetChanged();
     }
 
     public void addMovies(@NonNull List<Movie> movies) {
