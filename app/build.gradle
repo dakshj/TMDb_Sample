@@ -64,6 +64,7 @@ dependencies {
     //Miscellaneous
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.jakewharton.timber:timber:4.3.0'
+    compile 'com.google.guava:guava:19.0'
 
     //Unit Testing
     testCompile 'junit:junit:4.12'
