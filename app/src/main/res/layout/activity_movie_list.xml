@@ -30,9 +30,33 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <include
-                android:id="@+id/layoutMovieList"
-                layout="@layout/movie_list"/>
+            <com.daksh.tmdbsample.util.IdViewAnimator
+                android:id="@+id/idViewAnimator"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminate="true"/>
+
+                <RelativeLayout
+                    android:id="@+id/layoutFailure"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <!--TODO Add a text and a retry button here!-->
+
+                </RelativeLayout>
+
+                <include
+                    android:id="@+id/layoutMovieList"
+                    layout="@layout/movie_list"/>
+
+            </com.daksh.tmdbsample.util.IdViewAnimator>
+
         </FrameLayout>
 
     </android.support.design.widget.CoordinatorLayout>

@@ -46,9 +46,9 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
             }
         });
 
-        B.layoutMovieList.gridMovies.setLayoutManager(
+        B.layoutMovieList.listMovie.setLayoutManager(
                 new GridLayoutManager(this, GridLayoutManager.DEFAULT_SPAN_COUNT));
-        B.layoutMovieList.gridMovies.setAdapter(adapter);
+        B.layoutMovieList.listMovie.setAdapter(adapter);
     }
 
     @Override
