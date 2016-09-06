@@ -11,10 +11,8 @@ import java.lang.annotation.RetentionPolicy;
 
 public class SortOrder {
 
-    public static final int POPULAR_DESCENDING = 0;
-    public static final int POPULAR_ASCENDING = 1;
-    public static final int RATING_DESCENDING = 2;
-    public static final int RATING_ASCENDING = 3;
+    public static final int POPULAR = 0;
+    public static final int RATING = 2;
 
     public final int sortOrder;
 
@@ -23,7 +21,7 @@ public class SortOrder {
     }
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({POPULAR_DESCENDING, POPULAR_ASCENDING, RATING_DESCENDING, RATING_ASCENDING})
+    @IntDef({POPULAR, RATING})
     public @interface SortOrderDef {
     }
 }
