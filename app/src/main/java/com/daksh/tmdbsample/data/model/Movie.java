@@ -15,6 +15,16 @@ import java.util.Date;
  */
 public class Movie implements Parcelable {
 
+    /**
+     * Image Quality in terms of width in px
+     */
+    public static final int IMAGE_QUALITY = 400;
+
+    /**
+     * Full Image URL of a specific quality, {@value IMAGE_QUALITY}px in this case
+     */
+    private static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w" + IMAGE_QUALITY;
+
     public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
         @Override
         public Movie createFromParcel(Parcel source) {
@@ -26,6 +36,7 @@ public class Movie implements Parcelable {
             return new Movie[size];
         }
     };
+
     private final String title;
     @SerializedName("poster_path")
     private final String imageUrl;
@@ -52,11 +63,15 @@ public class Movie implements Parcelable {
         this.releaseDate = tmpReleaseDate == -1 ? null : new Date(tmpReleaseDate);
     }
 
+    /**
+     * Function used by DataBinding to load a poster image into an ImageView
+     * by calling {@link Movie#imageUrl}
+     */
     @BindingAdapter({"bind:imageUrl"})
     public static void loadImage(ImageView view, String imageUrl) {
         //TODO add placeholder
         Picasso.with(view.getContext())
-                .load(imageUrl)
+                .load(IMAGE_BASE_URL + imageUrl)
                 .into(view);
     }
 
