@@ -2,6 +2,7 @@ package com.daksh.tmdbsample.di;
 
 import com.daksh.tmdbsample.BuildConfig;
 import com.daksh.tmdbsample.app.TmdbApplication;
+import com.daksh.tmdbsample.di.component.AppComponent;
 import com.daksh.tmdbsample.di.module.AppModule;
 import com.daksh.tmdbsample.di.module.NetworkModule;
 

@@ -1,4 +1,4 @@
-package com.daksh.tmdbsample.di;
+package com.daksh.tmdbsample.di.component;
 
 import com.daksh.tmdbsample.app.TmdbApplication;
 import com.daksh.tmdbsample.di.module.AppModule;

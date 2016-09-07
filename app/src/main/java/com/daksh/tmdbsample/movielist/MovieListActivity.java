@@ -10,7 +10,7 @@ import com.daksh.tmdbsample.base.BaseActivity;
 import com.daksh.tmdbsample.data.intdef.SortOrder;
 import com.daksh.tmdbsample.data.model.Movie;
 import com.daksh.tmdbsample.databinding.ActivityMovieListBinding;
-import com.daksh.tmdbsample.di.AppComponent;
+import com.daksh.tmdbsample.di.component.AppComponent;
 import com.daksh.tmdbsample.moviedetail.MovieDetailActivity;
 import com.daksh.tmdbsample.moviedetail.MovieDetailFragment;
 
