@@ -24,12 +24,12 @@ android {
     productFlavors {
         Production_ {
             buildConfigField "boolean", "IS_PRODUCTION", "true"
-            buildConfigField 'String', 'BASE_URL', '"http://api.themoviedb.org/3"'
+            buildConfigField 'String', 'BASE_URL', '"http://api.themoviedb.org/3/"'
             buildConfigField 'String', 'API_KEY', '"3f41e7a0addc26031fdb06aa1c4b6bc0"'
         }
         Development_ {
             buildConfigField "boolean", "IS_PRODUCTION", "false"
-            buildConfigField 'String', 'BASE_URL', '"http://api.themoviedb.org/3"'
+            buildConfigField 'String', 'BASE_URL', '"http://api.themoviedb.org/3/"'
             buildConfigField 'String', 'API_KEY', '"3f41e7a0addc26031fdb06aa1c4b6bc0"'
         }
     }
@@ -66,8 +66,6 @@ dependencies {
 
     //Miscellaneous
     compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'com.jakewharton.timber:timber:4.3.0'
-    compile 'com.google.guava:guava:19.0'
 
     //Unit Testing
     testCompile 'junit:junit:4.12'

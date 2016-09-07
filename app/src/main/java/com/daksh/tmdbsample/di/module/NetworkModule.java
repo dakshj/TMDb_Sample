@@ -4,6 +4,7 @@ import com.daksh.tmdbsample.BuildConfig;
 import com.daksh.tmdbsample.data.source.remote.TmdbApi;
 import com.daksh.tmdbsample.data.source.remote.interceptor.ApiKeyInsertionInterceptor;
 import com.daksh.tmdbsample.data.source.remote.interceptor.LanguageCodeInsertionInterceptor;
+import com.daksh.tmdbsample.util.Logger;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,7 +22,6 @@ import okhttp3.logging.HttpLoggingInterceptor.Level;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import timber.log.Timber;
 
 /**
  * Created by daksh on 03-Sep-16.
@@ -68,7 +68,7 @@ public class NetworkModule {
         return new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
-                Timber.tag("Network").i(message);
+                Logger.networkLog(message);
             }
         }).setLevel(Level.BODY);
     }
