@@ -11,9 +11,9 @@ import rx.Single;
  */
 public interface TmdbApi {
 
-    @GET("/movie/popular")
+    @GET("movie/popular")
     Single<MovieListApiResponse> popular(@Query("page") Integer page);
 
-    @GET("/movie/top_rated")
+    @GET("movie/top_rated")
     Single<MovieListApiResponse> topRated(@Query("page") Integer page);
 }
