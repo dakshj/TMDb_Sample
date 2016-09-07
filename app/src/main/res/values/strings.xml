@@ -1,5 +1,7 @@
 <resources>
+
     <string name="app_name">TMDb Sample</string>
     <string name="title_movie_detail">Movie Detail</string>
     <string name="movie_list_poster_image">Movie\'s Poster Image</string>
+
 </resources>

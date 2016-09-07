@@ -3,6 +3,7 @@ package com.daksh.tmdbsample.movielist;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.widget.Toast;
 
@@ -18,8 +19,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class MovieListActivity
-        extends BaseActivity<MovieListPresenter> implements MovieListContract.View {
+public class MovieListActivity extends BaseActivity implements MovieListContract.View {
 
     private static final int GRID_COLUMNS = 2;
 
@@ -44,20 +44,7 @@ public class MovieListActivity
         B.toolbar.setTitle(getTitle());
 
         setUpGrid();
-    }
 
-    @Override
-    public MovieListPresenter getPresenter() {
-        return presenter;
-    }
-
-    @Override
-    protected void setPresenter(MovieListPresenter presenter) {
-        this.presenter = presenter;
-    }
-
-    @Override
-    protected void startPresenter() {
         presenter.start();
     }
 
@@ -77,6 +64,13 @@ public class MovieListActivity
 
         B.layoutMovieList.listMovie.setLayoutManager(new GridLayoutManager(this, GRID_COLUMNS));
         B.layoutMovieList.listMovie.setAdapter(adapter);
+
+        B.layoutMovieList.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.startSwipeRefresh();
+            }
+        });
     }
 
     @Override
@@ -138,8 +132,8 @@ public class MovieListActivity
     }
 
     @Override
-    public void stopPullToRefresh() {
-        //TODO
+    public void stopSwipeRefresh() {
+        B.layoutMovieList.swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override

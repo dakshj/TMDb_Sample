@@ -27,7 +27,7 @@ public interface MovieListContract {
 
         void showMovieDetails(Movie movie);
 
-        void stopPullToRefresh();
+        void stopSwipeRefresh();
 
         void stopInfiniteScroll();
     }
@@ -41,5 +41,7 @@ public interface MovieListContract {
         void openMovieDetails(Movie movie);
 
         void setSortOrder(SortOrder sortOrder);
+
+        void startSwipeRefresh();
     }
 }

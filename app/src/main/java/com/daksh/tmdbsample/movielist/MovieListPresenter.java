@@ -66,7 +66,7 @@ public class MovieListPresenter implements MovieListContract.Presenter {
 
     @Override
     public void loadMovies(final Integer page, SortOrder sortOrder, final ListLoadType listLoadType) {
-        if (page == null) {
+        if (listLoadType.listLoadType == ListLoadType.FIRST) {
             getView().showLoading();
         }
 
@@ -92,17 +92,20 @@ public class MovieListPresenter implements MovieListContract.Presenter {
                 .subscribe(new SingleSubscriber<MovieListApiResponse>() {
                     @Override
                     public void onSuccess(MovieListApiResponse response) {
-                        if (page == null) {
-                            getView().showMovies(response.getMovies());
+                        switch (listLoadType.listLoadType) {
+                            case ListLoadType.FIRST:
+                                getView().showMovies(response.getMovies());
+                                break;
 
-                            if (listLoadType.listLoadType == ListLoadType.PULL_TO_REFRESH) {
-                                getView().stopPullToRefresh();
-                            }
-                        } else {
-                            getView().addMovies(response.getMovies());
-                            if (listLoadType.listLoadType == ListLoadType.INFINITE_SCROLL) {
+                            case ListLoadType.SWIPE_REFRESH:
+                                getView().showMovies(response.getMovies());
+                                getView().stopSwipeRefresh();
+                                break;
+
+                            case ListLoadType.INFINITE_SCROLL:
+                                getView().addMovies(response.getMovies());
                                 getView().stopInfiniteScroll();
-                            }
+                                break;
                         }
                     }
 
@@ -127,5 +130,10 @@ public class MovieListPresenter implements MovieListContract.Presenter {
     public void setSortOrder(@NonNull SortOrder sortOrder) {
         appSettings.setSortOrder(sortOrder);
         loadMovies(null, sortOrder, new ListLoadType(ListLoadType.FIRST));
+    }
+
+    @Override
+    public void startSwipeRefresh() {
+        loadMovies(null, appSettings.getSortOrder(), new ListLoadType(ListLoadType.SWIPE_REFRESH));
     }
 }

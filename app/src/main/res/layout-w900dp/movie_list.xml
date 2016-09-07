@@ -15,14 +15,21 @@
         android:showDividers="middle"
         tools:context=".movielist.MovieListActivity">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/listMovie"
-            android:name="com.daksh.tmdbsample.MovieListFragment"
-            android:layout_width="@dimen/list_width_two_pane"
-            android:layout_height="match_parent"
-            app:layoutManager="GridLayoutManager"
-            tools:context=".movielist.MovieListActivity"
-            tools:listitem="@layout/movie_list_item"/>
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/listMovie"
+                android:name="com.daksh.tmdbsample.MovieListFragment"
+                android:layout_width="@dimen/list_width_two_pane"
+                android:layout_height="match_parent"
+                app:layoutManager="GridLayoutManager"
+                tools:context=".movielist.MovieListActivity"
+                tools:listitem="@layout/movie_list_item"/>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
 
         <FrameLayout
             android:id="@+id/movieDetailContainer"

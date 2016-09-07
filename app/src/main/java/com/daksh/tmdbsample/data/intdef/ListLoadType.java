@@ -12,8 +12,8 @@ import java.lang.annotation.RetentionPolicy;
 public class ListLoadType {
 
     public static final int FIRST = 0;
-    public static final int INFINITE_SCROLL = 1;
-    public static final int PULL_TO_REFRESH = 2;
+    public static final int SWIPE_REFRESH = 1;
+    public static final int INFINITE_SCROLL = 2;
 
     public final int listLoadType;
 
@@ -22,7 +22,7 @@ public class ListLoadType {
     }
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({FIRST, INFINITE_SCROLL, PULL_TO_REFRESH})
+    @IntDef({FIRST, SWIPE_REFRESH, INFINITE_SCROLL})
     public @interface ListLoadTypeDef {
     }
 }
