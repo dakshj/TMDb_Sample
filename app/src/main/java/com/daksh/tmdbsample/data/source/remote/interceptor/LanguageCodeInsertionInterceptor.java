@@ -12,17 +12,17 @@ import okhttp3.Response;
  */
 public class LanguageCodeInsertionInterceptor implements Interceptor {
 
-    private final String iso3LanguageCode;
+    private final String languageCode;
 
-    public LanguageCodeInsertionInterceptor(String iso3LanguageCode) {
-        this.iso3LanguageCode = iso3LanguageCode;
+    public LanguageCodeInsertionInterceptor(String languageCode) {
+        this.languageCode = languageCode;
     }
 
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
         HttpUrl url = request.url().newBuilder()
-                .addQueryParameter("language", iso3LanguageCode).build();
+                .addQueryParameter("language", languageCode).build();
         request = request.newBuilder().url(url).build();
         return chain.proceed(request);
     }

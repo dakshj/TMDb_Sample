@@ -55,7 +55,7 @@ public class NetworkModule {
     @Provides
     @Singleton
     LanguageCodeInsertionInterceptor provideLanguageCodeInsertionInterceptor(Locale locale) {
-        return new LanguageCodeInsertionInterceptor(locale.getISO3Language());
+        return new LanguageCodeInsertionInterceptor(locale.getLanguage());
     }
 
     @Provides
