@@ -22,4 +22,8 @@ public final class Logger {
     public static void errorLog(String message) {
         log("Error", message);
     }
+
+    public static void testLog(String message) {
+        log("Test", message);
+    }
 }

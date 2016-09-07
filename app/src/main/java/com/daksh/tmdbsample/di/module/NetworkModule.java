@@ -30,7 +30,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class NetworkModule {
 
-    public static final int TIMEOUT = 60;
+    private static final int TIMEOUT = 60;
 
     private String baseUrl;
     private String apiKey;
