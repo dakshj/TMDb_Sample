@@ -36,24 +36,37 @@
                 android:layout_height="match_parent">
 
                 <ProgressBar
-                    android:id="@+id/progressBar"
+                    android:id="@+id/loading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:indeterminate="true"/>
 
                 <RelativeLayout
-                    android:id="@+id/layoutFailure"
+                    android:id="@+id/error"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <!--TODO Add a text and a retry button here!-->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="Failed to Load!"/>
+
+                    <!--TODO Add retry button here, and improve the TextView!-->
 
                 </RelativeLayout>
 
-                <include
-                    android:id="@+id/layoutMovieList"
-                    layout="@layout/movie_list"/>
+                <FrameLayout
+                    android:id="@+id/content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <include
+                        android:id="@+id/layoutMovieList"
+                        layout="@layout/movie_list"/>
+
+                </FrameLayout>
 
             </com.daksh.tmdbsample.util.IdViewAnimator>
 
