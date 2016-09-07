@@ -48,10 +48,19 @@
                     android:layout_height="match_parent">
 
                     <TextView
+                        android:id="@+id/textError"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="Failed to Load!"/>
+                        android:text="@string/loading_failed"/>
+
+                    <Button
+                        android:id="@+id/buttonError"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textError"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/try_again"/>
 
                     <!--TODO Add retry button here, and improve the TextView!-->
 

@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
@@ -51,6 +50,8 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
 
         setUpGrid();
 
+        setUpErrorLayout();
+
         presenter.start();
     }
 
@@ -79,22 +80,17 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
     }
 
     private void setUpGrid() {
-        adapter = new MovieListAdapter(new MovieListAdapter.ItemClickListener() {
-            @Override
-            public void onItemClicked(Movie movie) {
-                presenter.openMovieDetails(movie);
-            }
-        });
+        adapter = new MovieListAdapter(movie -> presenter.openMovieDetails(movie));
 
         B.layoutMovieList.listMovie.setLayoutManager(new GridLayoutManager(this, GRID_COLUMNS));
         B.layoutMovieList.listMovie.setAdapter(adapter);
 
-        B.layoutMovieList.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                presenter.startSwipeRefresh();
-            }
-        });
+        B.layoutMovieList.swipeRefreshLayout.setOnRefreshListener(() ->
+                presenter.startSwipeRefresh());
+    }
+
+    private void setUpErrorLayout() {
+        B.buttonError.setOnClickListener(view -> presenter.start());
     }
 
     @Override

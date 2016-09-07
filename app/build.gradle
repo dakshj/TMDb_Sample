@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.daksh.tmdbsample"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -17,6 +17,10 @@ android {
     dexOptions {
         // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.
         preDexLibraries = preDexEnabled && !travisBuild
+    }
+
+    lintOptions {
+        abortOnError false
     }
 
     dataBinding {
