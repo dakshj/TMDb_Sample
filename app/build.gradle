@@ -13,25 +13,48 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    dexOptions {
+        // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.
+        preDexLibraries = preDexEnabled && !travisBuild
+    }
+
     dataBinding {
         enabled = true
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    signingConfigs {
+        debug {
+            storeFile file("debug.jks")
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+        debug {
+            signingConfig signingConfigs.debug
         }
     }
+
     productFlavors {
         Production_ {
             buildConfigField "boolean", "IS_PRODUCTION", "true"
             buildConfigField 'String', 'BASE_URL', '"http://api.themoviedb.org/3/"'
             buildConfigField 'String', 'API_KEY', '"3f41e7a0addc26031fdb06aa1c4b6bc0"'
         }
+
         Development_ {
             buildConfigField "boolean", "IS_PRODUCTION", "false"
             buildConfigField 'String', 'BASE_URL', '"http://api.themoviedb.org/3/"'
