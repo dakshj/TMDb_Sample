@@ -1,6 +1,5 @@
 package com.daksh.tmdbsample.movielist;
 
-import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -146,24 +145,21 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
         new AlertDialog.Builder(this)
                 .setTitle(R.string.select_sort_order)
                 .setView(binding.getRoot())
-                .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        SortOrder sortOrder = null;
+                .setPositiveButton(R.string.save, (dialogInterface, i) -> {
+                    SortOrder sortOrder = null;
 
-                        switch (binding.radioGroupSorting.getCheckedRadioButtonId()) {
-                            case R.id.radioPopular:
-                                sortOrder = new SortOrder(SortOrder.POPULAR);
-                                break;
+                    switch (binding.radioGroupSorting.getCheckedRadioButtonId()) {
+                        case R.id.radioPopular:
+                            sortOrder = new SortOrder(SortOrder.POPULAR);
+                            break;
 
-                            case R.id.radioTopRated:
-                                sortOrder = new SortOrder(SortOrder.TOP_RATED);
-                                break;
-                        }
+                        case R.id.radioTopRated:
+                            sortOrder = new SortOrder(SortOrder.TOP_RATED);
+                            break;
+                    }
 
-                        if (sortOrder != null) {
-                            presenter.setSortOrder(sortOrder);
-                        }
+                    if (sortOrder != null) {
+                        presenter.setSortOrder(sortOrder);
                     }
                 })
                 .setNegativeButton(R.string.cancel, null)

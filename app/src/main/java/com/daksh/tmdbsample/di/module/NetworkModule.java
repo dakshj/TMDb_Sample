@@ -61,12 +61,7 @@ public class NetworkModule {
     @Provides
     @Singleton
     HttpLoggingInterceptor provideHttpLoggingInterceptor() {
-        return new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
-            @Override
-            public void log(String message) {
-                Logger.networkLog(message);
-            }
-        }).setLevel(Level.BODY);
+        return new HttpLoggingInterceptor(Logger::networkLog).setLevel(Level.BODY);
     }
 
     @Provides

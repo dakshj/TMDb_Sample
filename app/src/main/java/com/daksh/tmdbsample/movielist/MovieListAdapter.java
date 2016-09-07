@@ -43,13 +43,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
          * Set height of poster image dynamically to avoid problem of disappearing neighbouring
          * images when an image is not yet loaded.
          */
-        B.imagePoster.post(new Runnable() {
-            @Override
-            public void run() {
-                B.imagePoster.getLayoutParams().height =
-                        (int) ((double) B.imagePoster.getWidth() * IMAGE_ASPECT_RATIO);
-            }
-        });
+        B.imagePoster.post(() -> B.imagePoster.getLayoutParams().height =
+                (int) ((double) B.imagePoster.getWidth() * IMAGE_ASPECT_RATIO));
 
         return new ViewHolder(B, itemClickListener);
     }
