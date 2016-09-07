@@ -207,7 +207,7 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
     @Override
     public void scrollListToTop() {
         if (adapter.getItemCount() > 0) {
-            B.layoutMovieList.listMovie.scrollToPosition(0);
+            B.layoutMovieList.listMovie.smoothScrollToPosition(0);
         }
     }
 }
