@@ -31,7 +31,7 @@ public class AppSettingsImpl implements AppSettings {
     public void setSortOrder(SortOrder sortOrder) {
         sharedPreferences
                 .edit()
-                .putInt(SORT_ORDER, sortOrder.sortOrder)
+                .putInt(SORT_ORDER, sortOrder.value)
                 .apply();
     }
 }

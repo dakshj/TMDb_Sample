@@ -15,14 +15,13 @@ public class ListLoadType {
     public static final int SWIPE_REFRESH = 1;
     public static final int INFINITE_SCROLL = 2;
 
-    public final int listLoadType;
+    public final int value;
 
-    public ListLoadType(@ListLoadTypeDef int listLoadType) {
-        this.listLoadType = listLoadType;
+    public ListLoadType(@ListLoadTypeDef int value) {
+        this.value = value;
     }
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({FIRST, SWIPE_REFRESH, INFINITE_SCROLL})
-    public @interface ListLoadTypeDef {
-    }
+    public @interface ListLoadTypeDef {}
 }

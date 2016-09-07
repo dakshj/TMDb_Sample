@@ -66,18 +66,18 @@ public class MovieListPresenter implements MovieListContract.Presenter {
 
     @Override
     public void loadMovies(final Integer page, SortOrder sortOrder, final ListLoadType listLoadType) {
-        if (listLoadType.listLoadType == ListLoadType.FIRST) {
+        if (listLoadType.value == ListLoadType.FIRST) {
             getView().showLoading();
         }
 
         Single<MovieListApiResponse> single = null;
 
-        switch (sortOrder.sortOrder) {
+        switch (sortOrder.value) {
             case SortOrder.POPULAR:
                 single = api.popular(page);
                 break;
 
-            case SortOrder.RATING:
+            case SortOrder.TOP_RATED:
                 single = api.topRated(page);
                 break;
         }
@@ -92,9 +92,10 @@ public class MovieListPresenter implements MovieListContract.Presenter {
                 .subscribe(new SingleSubscriber<MovieListApiResponse>() {
                     @Override
                     public void onSuccess(MovieListApiResponse response) {
-                        switch (listLoadType.listLoadType) {
+                        switch (listLoadType.value) {
                             case ListLoadType.FIRST:
                                 getView().showMovies(response.getMovies());
+                                getView().scrollListToTop();
                                 break;
 
                             case ListLoadType.SWIPE_REFRESH:
@@ -128,8 +129,12 @@ public class MovieListPresenter implements MovieListContract.Presenter {
 
     @Override
     public void setSortOrder(@NonNull SortOrder sortOrder) {
-        appSettings.setSortOrder(sortOrder);
-        loadMovies(null, sortOrder, new ListLoadType(ListLoadType.FIRST));
+        SortOrder currentSortOrder = appSettings.getSortOrder();
+
+        if (currentSortOrder.value != sortOrder.value) {
+            appSettings.setSortOrder(sortOrder);
+            loadMovies(null, sortOrder, new ListLoadType(ListLoadType.FIRST));
+        }
     }
 
     @Override

@@ -1,10 +1,15 @@
 package com.daksh.tmdbsample.movielist;
 
+import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.daksh.tmdbsample.R;
@@ -12,6 +17,7 @@ import com.daksh.tmdbsample.base.BaseActivity;
 import com.daksh.tmdbsample.data.intdef.SortOrder;
 import com.daksh.tmdbsample.data.model.Movie;
 import com.daksh.tmdbsample.databinding.ActivityMovieListBinding;
+import com.daksh.tmdbsample.databinding.ActivityMovieListSortDialogBinding;
 import com.daksh.tmdbsample.di.component.AppComponent;
 import com.daksh.tmdbsample.di.module.MovieListModule;
 
@@ -46,6 +52,24 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
         setUpGrid();
 
         presenter.start();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_movie_list_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_sort:
+                presenter.openSortOrderSelector();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @NonNull
@@ -109,7 +133,46 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
 
     @Override
     public void showSortOrderSelector(SortOrder currentSortOrder) {
+        final ActivityMovieListSortDialogBinding binding =
+                DataBindingUtil.inflate(LayoutInflater.from(this),
+                        R.layout.activity_movie_list_sort_dialog, null, false);
 
+        switch (currentSortOrder.value) {
+            case SortOrder.POPULAR:
+                binding.radioGroupSorting.check(R.id.radioPopular);
+                break;
+
+            case SortOrder.TOP_RATED:
+                binding.radioGroupSorting.check(R.id.radioTopRated);
+                break;
+        }
+
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.select_sort_order)
+                .setView(binding.getRoot())
+                .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        SortOrder sortOrder = null;
+
+                        switch (binding.radioGroupSorting.getCheckedRadioButtonId()) {
+                            case R.id.radioPopular:
+                                sortOrder = new SortOrder(SortOrder.POPULAR);
+                                break;
+
+                            case R.id.radioTopRated:
+                                sortOrder = new SortOrder(SortOrder.TOP_RATED);
+                                break;
+                        }
+
+                        if (sortOrder != null) {
+                            presenter.setSortOrder(sortOrder);
+                        }
+                    }
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .create()
+                .show();
     }
 
     @Override
@@ -139,5 +202,12 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
     @Override
     public void stopInfiniteScroll() {
         //TODO
+    }
+
+    @Override
+    public void scrollListToTop() {
+        if (adapter.getItemCount() > 0) {
+            B.layoutMovieList.listMovie.scrollToPosition(0);
+        }
     }
 }

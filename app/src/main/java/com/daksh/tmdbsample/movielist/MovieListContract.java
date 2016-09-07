@@ -30,6 +30,8 @@ public interface MovieListContract {
         void stopSwipeRefresh();
 
         void stopInfiniteScroll();
+
+        void scrollListToTop();
     }
 
     interface Presenter extends BasePresenter<View> {

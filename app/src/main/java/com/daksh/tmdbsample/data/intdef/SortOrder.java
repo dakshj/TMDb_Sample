@@ -12,16 +12,15 @@ import java.lang.annotation.RetentionPolicy;
 public class SortOrder {
 
     public static final int POPULAR = 0;
-    public static final int RATING = 1;
+    public static final int TOP_RATED = 1;
 
-    public final int sortOrder;
+    public final int value;
 
-    public SortOrder(@SortOrderDef int sortOrder) {
-        this.sortOrder = sortOrder;
+    public SortOrder(@SortOrderDef int value) {
+        this.value = value;
     }
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({POPULAR, RATING})
-    public @interface SortOrderDef {
-    }
+    @IntDef({POPULAR, TOP_RATED})
+    public @interface SortOrderDef {}
 }

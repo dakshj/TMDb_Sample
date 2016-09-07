@@ -35,27 +35,28 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        MovieListItemBinding B = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
-                R.layout.movie_list_item, parent, false);
+        final MovieListItemBinding B =
+                DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
+                        R.layout.movie_list_item, parent, false);
+
+        /**
+         * Set height of poster image dynamically to avoid problem of disappearing neighbouring
+         * images when an image is not yet loaded.
+         */
+        B.imagePoster.post(new Runnable() {
+            @Override
+            public void run() {
+                B.imagePoster.getLayoutParams().height =
+                        (int) ((double) B.imagePoster.getWidth() * IMAGE_ASPECT_RATIO);
+            }
+        });
+
         return new ViewHolder(B, itemClickListener);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.movie = movies.get(position);
-
-        /**
-         * Set height of poster image dynamically to avoid problem of disappearing neighbouring
-         * images when an image is not yet loaded.
-         */
-        holder.B.imagePoster.post(new Runnable() {
-            @Override
-            public void run() {
-                holder.B.imagePoster.getLayoutParams().height =
-                        (int) ((double) holder.B.imagePoster.getWidth() * IMAGE_ASPECT_RATIO);
-            }
-        });
-
         holder.B.setMovie(holder.movie);
     }
 
