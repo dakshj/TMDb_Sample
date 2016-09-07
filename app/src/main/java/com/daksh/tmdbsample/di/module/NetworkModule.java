@@ -61,10 +61,6 @@ public class NetworkModule {
     @Provides
     @Singleton
     HttpLoggingInterceptor provideHttpLoggingInterceptor() {
-        if (BuildConfig.DEBUG) {
-            return null;
-        }
-
         return new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
