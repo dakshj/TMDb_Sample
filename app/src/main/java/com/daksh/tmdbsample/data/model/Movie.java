@@ -67,7 +67,7 @@ public class Movie implements Parcelable {
      * Function used by DataBinding to load a poster image into an ImageView
      * by calling {@link Movie#imageUrl}
      */
-    @BindingAdapter({"bind:imageUrl"})
+    @BindingAdapter({"imageUrl"})
     public static void loadImage(ImageView view, String imageUrl) {
         Picasso.with(view.getContext())
                 .load(IMAGE_BASE_URL + imageUrl)
