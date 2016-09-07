@@ -7,7 +7,7 @@ import com.daksh.tmdbsample.base.BaseView;
  */
 public interface MovieDetailContract {
 
-    interface View extends BaseView<Presenter> {
+    interface View extends BaseView {
 
     }
 

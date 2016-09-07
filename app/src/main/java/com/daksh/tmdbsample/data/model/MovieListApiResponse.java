@@ -11,13 +11,13 @@ public class MovieListApiResponse {
 
     private final long page;
     @SerializedName("results")
-    private final List<Movie> movieList;
+    private final List<Movie> movies;
     private final long totalResults;
     private final long totalPages;
 
-    public MovieListApiResponse(long page, List<Movie> movieList, long totalResults, long totalPages) {
+    public MovieListApiResponse(long page, List<Movie> movies, long totalResults, long totalPages) {
         this.page = page;
-        this.movieList = movieList;
+        this.movies = movies;
         this.totalResults = totalResults;
         this.totalPages = totalPages;
     }
@@ -26,8 +26,8 @@ public class MovieListApiResponse {
         return page;
     }
 
-    public List<Movie> getMovieList() {
-        return movieList;
+    public List<Movie> getMovies() {
+        return movies;
     }
 
     public long getTotalResults() {

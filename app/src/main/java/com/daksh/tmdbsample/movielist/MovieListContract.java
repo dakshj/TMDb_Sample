@@ -2,6 +2,7 @@ package com.daksh.tmdbsample.movielist;
 
 import android.support.annotation.NonNull;
 
+import com.daksh.tmdbsample.base.BasePresenter;
 import com.daksh.tmdbsample.base.BaseView;
 import com.daksh.tmdbsample.data.intdef.SortOrder;
 import com.daksh.tmdbsample.data.model.Movie;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public interface MovieListContract {
 
-    interface View extends BaseView<Presenter> {
+    interface View extends BaseView {
 
         void showLoading();
 
@@ -24,11 +25,15 @@ public interface MovieListContract {
         void addMovies(List<Movie> movies);
 
         void showSortOrderSelector(SortOrder currentSortOrder);
+
+        void showMovieDetails(Movie movie);
     }
 
-    interface Presenter {
+    interface Presenter extends BasePresenter<View> {
 
-        void loadMovies(Integer page);
+        void loadMovies(Integer page, SortOrder sortOrder);
+
+        void openSortOrderSelector();
 
         void openMovieDetails(@NonNull Movie movie);
 
