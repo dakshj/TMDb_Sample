@@ -12,7 +12,7 @@ import java.lang.annotation.RetentionPolicy;
 public class SortOrder {
 
     public static final int POPULAR = 0;
-    public static final int RATING = 2;
+    public static final int RATING = 1;
 
     public final int sortOrder;
 

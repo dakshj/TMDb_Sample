@@ -34,6 +34,7 @@ public abstract class BaseActivity<P> extends AppCompatActivity {
 
     private void initialize() {
         setupComponent();
+        startPresenter();
         mStateMaintainer.put(getTag(), getPresenter());
     }
 
@@ -52,6 +53,8 @@ public abstract class BaseActivity<P> extends AppCompatActivity {
     protected abstract P getPresenter();
 
     protected abstract void setPresenter(P presenter);
+
+    protected abstract void startPresenter();
 
     /**
      * @return Tag:<br/>A unique key used to persist the Presenter across configuration changes.

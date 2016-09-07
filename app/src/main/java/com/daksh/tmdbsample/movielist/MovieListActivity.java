@@ -44,8 +44,6 @@ public class MovieListActivity
         B.toolbar.setTitle(getTitle());
 
         setUpGrid();
-
-        presenter.start();
     }
 
     @Override
@@ -56,6 +54,11 @@ public class MovieListActivity
     @Override
     protected void setPresenter(MovieListPresenter presenter) {
         this.presenter = presenter;
+    }
+
+    @Override
+    protected void startPresenter() {
+        presenter.start();
     }
 
     @NonNull
@@ -117,7 +120,7 @@ public class MovieListActivity
 
     @Override
     public void showMovieDetails(Movie movie) {
-        Toast.makeText(this, "Clicked on a Movie!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Clicked on " + movie.getTitle() + "!", Toast.LENGTH_SHORT).show();
         //TODO go to movie details
         //if (isTwoPane()) {
         //    Bundle arguments = new Bundle();
@@ -132,5 +135,15 @@ public class MovieListActivity
         //    intent.putExtra(MovieDetailFragment.ARG_MOVIE, movie);
         //    startActivity(intent);
         //}
+    }
+
+    @Override
+    public void stopPullToRefresh() {
+        //TODO
+    }
+
+    @Override
+    public void stopInfiniteScroll() {
+        //TODO
     }
 }

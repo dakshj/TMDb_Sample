@@ -2,6 +2,7 @@ package com.daksh.tmdbsample.movielist;
 
 import android.support.annotation.NonNull;
 
+import com.daksh.tmdbsample.data.intdef.ListLoadType;
 import com.daksh.tmdbsample.data.intdef.SortOrder;
 import com.daksh.tmdbsample.data.model.Movie;
 import com.daksh.tmdbsample.data.model.MovieListApiResponse;
@@ -42,7 +43,7 @@ public class MovieListPresenter implements MovieListContract.Presenter {
 
     @Override
     public void start() {
-        loadMovies(null, appSettings.getSortOrder());
+        loadMovies(null, appSettings.getSortOrder(), new ListLoadType(ListLoadType.FIRST));
     }
 
     @Override
@@ -64,7 +65,7 @@ public class MovieListPresenter implements MovieListContract.Presenter {
     }
 
     @Override
-    public void loadMovies(final Integer page, SortOrder sortOrder) {
+    public void loadMovies(final Integer page, SortOrder sortOrder, final ListLoadType listLoadType) {
         if (page == null) {
             getView().showLoading();
         }
@@ -93,10 +94,15 @@ public class MovieListPresenter implements MovieListContract.Presenter {
                     public void onSuccess(MovieListApiResponse response) {
                         if (page == null) {
                             getView().showMovies(response.getMovies());
-                            //TODO stop pull to refresh loader -- only if it was a pull to refresh
+
+                            if (listLoadType.listLoadType == ListLoadType.PULL_TO_REFRESH) {
+                                getView().stopPullToRefresh();
+                            }
                         } else {
                             getView().addMovies(response.getMovies());
-                            //TODO stop infinite scroll loader
+                            if (listLoadType.listLoadType == ListLoadType.INFINITE_SCROLL) {
+                                getView().stopInfiniteScroll();
+                            }
                         }
                     }
 
@@ -120,6 +126,6 @@ public class MovieListPresenter implements MovieListContract.Presenter {
     @Override
     public void setSortOrder(@NonNull SortOrder sortOrder) {
         appSettings.setSortOrder(sortOrder);
-        loadMovies(null, sortOrder);
+        loadMovies(null, sortOrder, new ListLoadType(ListLoadType.FIRST));
     }
 }
