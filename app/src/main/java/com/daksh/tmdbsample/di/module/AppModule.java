@@ -1,8 +1,11 @@
 package com.daksh.tmdbsample.di.module;
 
+import android.app.Application;
 import android.content.Context;
 
 import com.daksh.tmdbsample.app.TmdbApplication;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -21,7 +24,14 @@ public class AppModule {
     }
 
     @Provides
-    Context provideApplicationContext() {
+    @Singleton
+    Application provideApplication() {
+        return application;
+    }
+
+    @Provides
+    @Singleton
+    Context provideContext() {
         return application.getApplicationContext();
     }
 }
