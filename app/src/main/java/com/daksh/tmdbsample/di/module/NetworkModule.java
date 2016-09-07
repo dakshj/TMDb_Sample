@@ -1,7 +1,7 @@
 package com.daksh.tmdbsample.di.module;
 
 import com.daksh.tmdbsample.BuildConfig;
-import com.daksh.tmdbsample.data.source.remote.MovieDbApi;
+import com.daksh.tmdbsample.data.source.remote.TmdbApi;
 import com.daksh.tmdbsample.data.source.remote.interceptor.ApiKeyInsertionInterceptor;
 import com.daksh.tmdbsample.data.source.remote.interceptor.LanguageCodeInsertionInterceptor;
 import com.google.gson.FieldNamingPolicy;
@@ -113,7 +113,7 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    MovieDbApi provideMovieDbApi(Retrofit retrofit) {
-        return retrofit.create(MovieDbApi.class);
+    TmdbApi provideTmdbApi(Retrofit retrofit) {
+        return retrofit.create(TmdbApi.class);
     }
 }
