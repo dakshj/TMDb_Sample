@@ -36,7 +36,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class,
-        sdk = Build.VERSION_CODES.M)
+        sdk = Build.VERSION_CODES.LOLLIPOP_MR1)
 public class MovieListPresenterTest {
 
     @Rule
@@ -68,7 +68,7 @@ public class MovieListPresenterTest {
     }
 
     @Test
-    public void testStartPresenterWithPopularSortOrder() {
+    public void startPresenterWithPopularSortOrder() {
         when(appSettings.getSortOrder()).thenReturn(new SortOrder(SortOrder.POPULAR));
 
         MovieListApiResponse popularMovies = MockResponse.getPopularMovies(gson);
@@ -83,7 +83,7 @@ public class MovieListPresenterTest {
     }
 
     @Test
-    public void testStartPresenterWithTopRatedSortOrder() {
+    public void startPresenterWithTopRatedSortOrder() {
         when(appSettings.getSortOrder()).thenReturn(new SortOrder(SortOrder.TOP_RATED));
 
         MovieListApiResponse topRatedMovies = MockResponse.getTopRatedMovies(gson);

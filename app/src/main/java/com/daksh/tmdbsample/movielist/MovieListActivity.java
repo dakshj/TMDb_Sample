@@ -163,7 +163,6 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
                     }
                 })
                 .setNegativeButton(R.string.cancel, null)
-                .create()
                 .show();
     }
 

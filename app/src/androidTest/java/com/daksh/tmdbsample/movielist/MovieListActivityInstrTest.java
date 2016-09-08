@@ -32,7 +32,7 @@ import static org.hamcrest.core.IsNot.not;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class MovieListActivityTest extends TestCase {
+public class MovieListActivityInstrTest extends TestCase {
 
     MovieListActivity activity;
 
@@ -46,7 +46,7 @@ public class MovieListActivityTest extends TestCase {
     }
 
     @Test
-    public void testShouldOpenSortingAlertDialogWhenSortMenuItemClicked() {
+    public void shouldOpenSortingAlertDialogWhenSortMenuItemClicked() {
         onView(withId(R.id.menu_sort))
                 .perform(click());
 
@@ -56,7 +56,7 @@ public class MovieListActivityTest extends TestCase {
     }
 
     @Test
-    public void testShouldReloadListAfterSelectingOtherRadioButton() {
+    public void shouldReloadListAfterSelectingOtherRadioButton() {
         //Reset check to Popular
         onView(withId(R.id.menu_sort))
                 .perform(click());
@@ -86,7 +86,7 @@ public class MovieListActivityTest extends TestCase {
     //on a phone, or the side container filled on a tab
 
     @Test
-    public void testShouldShowToastAfterClickingOnListItem() {
+    public void shouldShowToastAfterClickingOnListItem() {
         onView(withId(R.id.listMovie))
                 .perform(actionOnItemAtPosition(0, click()));
 
