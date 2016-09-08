@@ -49,4 +49,31 @@ public class MovieListActivityTest extends TestCase {
                 .inRoot(isDialog())
                 .check(matches(isDisplayed()));
     }
+
+    @Test
+    public void testShouldReloadListAfterSelectingOtherRadioButton() {
+        //Reset check to Popular
+        onView(withId(R.id.menu_sort))
+                .perform(click());
+
+        onView(withId(R.id.radioPopular))
+                .perform(click());
+
+        onView(withText(R.string.save))
+                .perform(click());
+
+        //Test loading Top Rated
+        onView(withId(R.id.menu_sort))
+                .perform(click());
+
+        onView(withId(R.id.radioTopRated))
+                .perform(click());
+
+        onView(withText(R.string.save))
+                .perform(click());
+
+        //Requires Internet to pass
+        onView(withId(R.id.content))
+                .check(matches(isDisplayed()));
+    }
 }
