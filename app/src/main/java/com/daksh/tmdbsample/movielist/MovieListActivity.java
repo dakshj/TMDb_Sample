@@ -143,7 +143,7 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
         }
 
         new AlertDialog.Builder(this)
-                .setTitle(R.string.select_sort_order)
+                .setTitle(R.string.dialog_sort_order_title)
                 .setView(binding.getRoot())
                 .setPositiveButton(R.string.save, (dialogInterface, i) -> {
                     SortOrder sortOrder = null;
