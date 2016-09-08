@@ -16,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:contentDescription="@string/movie_list_poster_image"
+        android:scaleType="centerCrop"
         app:imageUrl="@{movie.imageUrl}"/>
 
 </layout>

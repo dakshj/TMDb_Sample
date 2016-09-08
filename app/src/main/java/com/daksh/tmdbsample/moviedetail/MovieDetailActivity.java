@@ -1,7 +1,10 @@
 package com.daksh.tmdbsample.moviedetail;
 
+import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -9,8 +12,11 @@ import android.view.MenuItem;
 
 import com.daksh.tmdbsample.R;
 import com.daksh.tmdbsample.base.BaseActivity;
+import com.daksh.tmdbsample.data.model.Movie;
+import com.daksh.tmdbsample.databinding.ActivityMovieDetailBinding;
 import com.daksh.tmdbsample.di.component.AppComponent;
 import com.daksh.tmdbsample.movielist.MovieListActivity;
+import com.daksh.tmdbsample.util.Logger;
 
 /**
  * An activity representing a single Movie detail screen. This
@@ -18,12 +24,22 @@ import com.daksh.tmdbsample.movielist.MovieListActivity;
  * item details are presented side-by-side with a list of items
  * in a {@link MovieListActivity}.
  */
-public class MovieDetailActivity extends BaseActivity {
+public class MovieDetailActivity extends BaseActivity implements MovieDetailContract.View {
+
+    private ActivityMovieDetailBinding B;
+
+    public static void start(@NonNull Context context, @NonNull Movie movie) {
+        context.startActivity(
+                new Intent(context, MovieDetailActivity.class)
+                        .putExtra(MovieDetailFragment.ARG_MOVIE, movie)
+        );
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_detail);
+        B = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarDetail);
         setSupportActionBar(toolbar);
 
@@ -34,25 +50,23 @@ public class MovieDetailActivity extends BaseActivity {
         }
 
         // savedInstanceState is non-null when there is fragment state
-        // saved from previous configurations of this activity
-        // (e.g. when rotating the screen from portrait to landscape).
+        // saved from previous configurations of this activity.
         // In this case, the fragment will automatically be re-added
         // to its container so we don't need to manually add it.
-        // For more information, see the Fragments API guide at:
-        //
-        // http://developer.android.com/guide/components/fragments.html
-        //
         if (savedInstanceState == null) {
-            // Create the detail fragment and add it to the activity
-            // using a fragment transaction.
-            Bundle arguments = new Bundle();
-            arguments.putString(MovieDetailFragment.ARG_MOVIE,
-                    getIntent().getStringExtra(MovieDetailFragment.ARG_MOVIE));
-            MovieDetailFragment fragment = new MovieDetailFragment();
-            fragment.setArguments(arguments);
+            Movie movie = getIntent().getParcelableExtra(MovieDetailFragment.ARG_MOVIE);
+
+            if (movie == null) {
+                Logger.errorLog("Movie is null in MovieDetailActivity!");
+                finish();
+                return;
+            }
+
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.movieDetailContainer, fragment)
+                    .add(R.id.movieDetailContainer, MovieDetailFragment.get(movie))
                     .commit();
+
+            B.setMovie(movie);
         }
     }
 

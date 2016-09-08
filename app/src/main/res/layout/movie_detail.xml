@@ -3,12 +3,21 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="movie"
+            type="com.daksh.tmdbsample.data.model.Movie"/>
+
+    </data>
+
     <TextView
         android:id="@+id/textTitle"
         style="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp"
+        android:text="@{movie.title}"
         android:textIsSelectable="true"
         tools:context=".moviedetail.MovieDetailFragment"/>
 

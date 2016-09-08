@@ -7,7 +7,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.daksh.tmdbsample.R;
 import com.daksh.tmdbsample.base.BaseActivity;
@@ -17,6 +16,8 @@ import com.daksh.tmdbsample.databinding.ActivityMovieListBinding;
 import com.daksh.tmdbsample.databinding.ActivityMovieListSortDialogBinding;
 import com.daksh.tmdbsample.di.component.AppComponent;
 import com.daksh.tmdbsample.di.module.MovieListModule;
+import com.daksh.tmdbsample.moviedetail.MovieDetailActivity;
+import com.daksh.tmdbsample.moviedetail.MovieDetailFragment;
 import com.daksh.tmdbsample.util.EndlessRecyclerViewScrollListener;
 
 import java.util.List;
@@ -174,21 +175,13 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
 
     @Override
     public void showMovieDetails(Movie movie) {
-        Toast.makeText(this, "Clicked on " + movie.getTitle() + "!", Toast.LENGTH_SHORT).show();
-        //TODO go to movie details
-        //if (isTwoPane()) {
-        //    Bundle arguments = new Bundle();
-        //    arguments.putParcelable(MovieDetailFragment.ARG_MOVIE, movie);
-        //    MovieDetailFragment fragment = new MovieDetailFragment();
-        //    fragment.setArguments(arguments);
-        //    getSupportFragmentManager().beginTransaction()
-        //            .replace(R.id.movieDetailContainer, fragment)
-        //            .commit();
-        //} else {
-        //    Intent intent = new Intent(MovieListActivity.this, MovieDetailActivity.class);
-        //    intent.putExtra(MovieDetailFragment.ARG_MOVIE, movie);
-        //    startActivity(intent);
-        //}
+        if (isTwoPane()) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.movieDetailContainer, MovieDetailFragment.get(movie))
+                    .commit();
+        } else {
+            MovieDetailActivity.start(this, movie);
+        }
     }
 
     @Override

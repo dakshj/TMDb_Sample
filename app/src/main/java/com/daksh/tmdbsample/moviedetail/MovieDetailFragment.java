@@ -1,16 +1,16 @@
 package com.daksh.tmdbsample.moviedetail;
 
-import android.app.Activity;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.daksh.tmdbsample.R;
 import com.daksh.tmdbsample.base.BaseFragment;
 import com.daksh.tmdbsample.data.model.Movie;
+import com.daksh.tmdbsample.databinding.MovieDetailBinding;
 import com.daksh.tmdbsample.di.component.AppComponent;
 import com.daksh.tmdbsample.di.module.MovieDetailModule;
 import com.daksh.tmdbsample.movielist.MovieListActivity;
@@ -22,16 +22,11 @@ import com.daksh.tmdbsample.movielist.MovieListActivity;
  * on handsets.
  */
 public class MovieDetailFragment extends BaseFragment implements MovieDetailContract.View {
-    /**
-     * The fragment argument representing the item ID that this fragment
-     * represents.
-     */
+
     public static final String ARG_MOVIE = "movie";
 
-    /**
-     * The dummy content this fragment is presenting.
-     */
     private Movie movie;
+    private MovieDetailBinding B;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -40,18 +35,21 @@ public class MovieDetailFragment extends BaseFragment implements MovieDetailCont
     public MovieDetailFragment() {
     }
 
+    public static MovieDetailFragment get(@NonNull final Movie movie) {
+        Bundle arguments = new Bundle();
+        arguments.putParcelable(MovieDetailFragment.ARG_MOVIE, movie);
+        MovieDetailFragment fragment = new MovieDetailFragment();
+        fragment.setArguments(arguments);
+
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (getArguments().containsKey(ARG_MOVIE)) {
             movie = getArguments().getParcelable(ARG_MOVIE);
-
-            Activity activity = this.getActivity();
-            CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbarLayout);
-            if (appBarLayout != null) {
-                appBarLayout.setTitle(movie.getTitle());
-            }
         }
     }
 
@@ -63,13 +61,12 @@ public class MovieDetailFragment extends BaseFragment implements MovieDetailCont
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.movie_detail, container, false);
+        B = DataBindingUtil.inflate(inflater, R.layout.movie_detail, container, false);
 
-        // Show the dummy content as text in a TextView.
         if (movie != null) {
-            ((TextView) rootView.findViewById(R.id.textTitle)).setText(movie.getTitle());
+            B.setMovie(movie);
         }
 
-        return rootView;
+        return B.getRoot();
     }
 }
