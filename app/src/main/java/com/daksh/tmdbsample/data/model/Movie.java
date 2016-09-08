@@ -28,27 +28,41 @@ public class Movie implements Parcelable {
     };
 
     /**
-     * Image Quality in terms of width in px
+     * Poster Image Quality in terms of width in px
      */
-    private static final int IMAGE_QUALITY = 500;
+    private static final String POSTER_IMAGE_QUALITY = "w500";
 
     /**
-     * Full Image URL of a specific quality, {@value IMAGE_QUALITY}px in this case
+     * Backdrop Image Quality in terms of width in px
      */
-    private static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w" + IMAGE_QUALITY;
+    private static final String BACKDROP_IMAGE_QUALITY = "w1280";
+
+    /**
+     * Image's Base URL
+     */
+    private static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/";
 
     private final String title;
+
     @SerializedName("poster_path")
-    private final String imageUrl;
+    private final String posterImageUrl;
+
+    @SerializedName("backdrop_path")
+    private final String backdropImageUrl;
+
     @SerializedName("overview")
     private final String synopsis;
+
     @SerializedName("vote_average")
     private final double userRating;
+
     private final Date releaseDate;
 
-    public Movie(String title, String imageUrl, String synopsis, double userRating, Date releaseDate) {
+    public Movie(String title, String posterImageUrl, String backdropImageUrl, String synopsis,
+            double userRating, Date releaseDate) {
         this.title = title;
-        this.imageUrl = imageUrl;
+        this.posterImageUrl = posterImageUrl;
+        this.backdropImageUrl = backdropImageUrl;
         this.synopsis = synopsis;
         this.userRating = userRating;
         this.releaseDate = releaseDate;
@@ -56,7 +70,8 @@ public class Movie implements Parcelable {
 
     protected Movie(Parcel in) {
         this.title = in.readString();
-        this.imageUrl = in.readString();
+        this.posterImageUrl = in.readString();
+        this.backdropImageUrl = in.readString();
         this.synopsis = in.readString();
         this.userRating = in.readDouble();
         long tmpReleaseDate = in.readLong();
@@ -65,12 +80,25 @@ public class Movie implements Parcelable {
 
     /**
      * Function used by DataBinding to load a poster image into an ImageView
-     * by calling {@link Movie#imageUrl}
+     * by calling {@link Movie#posterImageUrl}
      */
-    @BindingAdapter({"imageUrl"})
-    public static void loadImage(ImageView view, String imageUrl) {
+    @BindingAdapter({"posterImageUrl"})
+    public static void loadPosterImage(ImageView view, String imageUrl) {
+        loadImage(view, IMAGE_BASE_URL + POSTER_IMAGE_QUALITY + imageUrl);
+    }
+
+    /**
+     * Function used by DataBinding to load a backdrop image into an ImageView
+     * by calling {@link Movie#backdropImageUrl}
+     */
+    @BindingAdapter({"backdropImageUrl"})
+    public static void loadBackdropImage(ImageView view, String imageUrl) {
+        loadImage(view, IMAGE_BASE_URL + BACKDROP_IMAGE_QUALITY + imageUrl);
+    }
+
+    private static void loadImage(ImageView view, String imageUrl) {
         Picasso.with(view.getContext())
-                .load(IMAGE_BASE_URL + imageUrl)
+                .load(imageUrl)
                 .into(view);
     }
 
@@ -78,8 +106,12 @@ public class Movie implements Parcelable {
         return title;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getPosterImageUrl() {
+        return posterImageUrl;
+    }
+
+    public String getBackdropImageUrl() {
+        return backdropImageUrl;
     }
 
     public String getSynopsis() {
@@ -102,7 +134,8 @@ public class Movie implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.title);
-        dest.writeString(this.imageUrl);
+        dest.writeString(this.posterImageUrl);
+        dest.writeString(this.backdropImageUrl);
         dest.writeString(this.synopsis);
         dest.writeDouble(this.userRating);
         dest.writeLong(this.releaseDate != null ? this.releaseDate.getTime() : -1);

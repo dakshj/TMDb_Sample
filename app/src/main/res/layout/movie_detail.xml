@@ -11,14 +11,22 @@
 
     </data>
 
-    <TextView
-        android:id="@+id/textTitle"
-        style="?android:attr/textAppearanceLarge"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp"
-        android:text="@{movie.title}"
-        android:textIsSelectable="true"
-        tools:context=".moviedetail.MovieDetailFragment"/>
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <TextView
+            android:id="@+id/textSynopsis"
+            style="?android:attr/textAppearanceMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="@{movie.synopsis}"
+            android:textIsSelectable="true"
+            tools:context=".moviedetail.MovieDetailFragment"/>
+
+    </RelativeLayout>
 
 </layout>

@@ -36,6 +36,16 @@
                 app:title="@{movie.title}"
                 app:toolbarId="@+id/toolbar">
 
+                <ImageView
+                    android:id="@+id/imageBackdrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/movie_detail_backdrop_image"
+                    android:scaleType="centerCrop"
+                    app:backdropImageUrl="@{movie.backdropImageUrl}"
+                    app:layout_collapseMode="parallax"
+                    app:layout_collapseParallaxMultiplier="0.5"/>
+
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbarDetail"
                     android:layout_width="match_parent"
