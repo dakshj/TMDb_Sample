@@ -2,7 +2,6 @@ package com.daksh.tmdbsample.movielist;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
@@ -72,12 +71,6 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    @NonNull
-    @Override
-    public String getTag() {
-        return "MovieListActivity";
     }
 
     private void setUpGrid() {

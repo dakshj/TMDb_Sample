@@ -2,6 +2,7 @@ package com.daksh.tmdbsample.movielist;
 
 import android.support.annotation.NonNull;
 
+import com.daksh.tmdbsample.base.BasePresenterImpl;
 import com.daksh.tmdbsample.data.intdef.ListLoadType;
 import com.daksh.tmdbsample.data.intdef.SortOrder;
 import com.daksh.tmdbsample.data.model.Movie;
@@ -9,8 +10,6 @@ import com.daksh.tmdbsample.data.model.MovieListApiResponse;
 import com.daksh.tmdbsample.data.source.local.AppSettings;
 import com.daksh.tmdbsample.data.source.remote.TmdbApi;
 import com.daksh.tmdbsample.di.scope.ActivityScope;
-
-import java.lang.ref.WeakReference;
 
 import javax.inject.Inject;
 
@@ -24,14 +23,14 @@ import rx.schedulers.Schedulers;
  */
 
 @ActivityScope
-public class MovieListPresenter implements MovieListContract.Presenter {
+public class MovieListPresenter extends BasePresenterImpl<MovieListContract.View>
+        implements MovieListContract.Presenter {
 
     @NonNull
     private final TmdbApi api;
+
     @NonNull
     private final AppSettings appSettings;
-
-    private WeakReference<MovieListContract.View> viewRef;
 
     @Inject
     public MovieListPresenter(@NonNull MovieListContract.View view,
@@ -44,24 +43,6 @@ public class MovieListPresenter implements MovieListContract.Presenter {
     @Override
     public void start() {
         loadMovies(null, new ListLoadType(ListLoadType.FIRST));
-    }
-
-    @Override
-    public void attachView(MovieListContract.View view) {
-        viewRef = new WeakReference<>(view);
-    }
-
-    private MovieListContract.View getView() throws NullPointerException {
-        if (viewRef != null && viewRef.get() != null) {
-            return viewRef.get();
-        } else {
-            throw new NullPointerException("View is unavailable");
-        }
-    }
-
-    @Override
-    public void detachView() {
-        viewRef = null;
     }
 
     private void loadMovies(final Integer page, final ListLoadType listLoadType) {

@@ -5,9 +5,11 @@ package com.daksh.tmdbsample.base;
  */
 public interface BasePresenter<V> {
 
+    void attachView(V view);
+
     void start();
 
-    void attachView(V view);
+    V getView();
 
     void detachView();
 }

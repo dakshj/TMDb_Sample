@@ -1,5 +1,6 @@
 package com.daksh.tmdbsample.moviedetail;
 
+import com.daksh.tmdbsample.base.BasePresenter;
 import com.daksh.tmdbsample.base.BaseView;
 
 /**
@@ -11,7 +12,7 @@ public interface MovieDetailContract {
 
     }
 
-    interface Presenter {
+    interface Presenter extends BasePresenter<View> {
 
     }
 }

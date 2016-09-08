@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
-import com.daksh.tmdbsample.di.component.AppComponent;
 import com.daksh.tmdbsample.di.Injector;
+import com.daksh.tmdbsample.di.component.AppComponent;
 
 /**
  * Created by daksh on 03-Sep-16.

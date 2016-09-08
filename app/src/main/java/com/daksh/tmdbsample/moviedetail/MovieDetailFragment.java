@@ -3,14 +3,16 @@ package com.daksh.tmdbsample.moviedetail;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.daksh.tmdbsample.R;
+import com.daksh.tmdbsample.base.BaseFragment;
 import com.daksh.tmdbsample.data.model.Movie;
+import com.daksh.tmdbsample.di.component.AppComponent;
+import com.daksh.tmdbsample.di.module.MovieDetailModule;
 import com.daksh.tmdbsample.movielist.MovieListActivity;
 
 /**
@@ -19,7 +21,7 @@ import com.daksh.tmdbsample.movielist.MovieListActivity;
  * in two-pane mode (on tablets) or a {@link MovieDetailActivity}
  * on handsets.
  */
-public class MovieDetailFragment extends Fragment {
+public class MovieDetailFragment extends BaseFragment implements MovieDetailContract.View {
     /**
      * The fragment argument representing the item ID that this fragment
      * represents.
@@ -51,6 +53,11 @@ public class MovieDetailFragment extends Fragment {
                 appBarLayout.setTitle(movie.getTitle());
             }
         }
+    }
+
+    @Override
+    public void injectFragment(AppComponent applicationComponent) {
+        applicationComponent.getMovieDetailComponent(new MovieDetailModule(this)).inject(this);
     }
 
     @Override

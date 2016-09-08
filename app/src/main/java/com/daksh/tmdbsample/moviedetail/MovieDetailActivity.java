@@ -4,11 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.daksh.tmdbsample.R;
+import com.daksh.tmdbsample.base.BaseActivity;
+import com.daksh.tmdbsample.di.component.AppComponent;
 import com.daksh.tmdbsample.movielist.MovieListActivity;
 
 /**
@@ -17,7 +18,7 @@ import com.daksh.tmdbsample.movielist.MovieListActivity;
  * item details are presented side-by-side with a list of items
  * in a {@link MovieListActivity}.
  */
-public class MovieDetailActivity extends AppCompatActivity {
+public class MovieDetailActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,16 +57,14 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
     @Override
+    public void injectActivity(AppComponent appComponent) {
+        //Not needed
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // This ID represents the Home or Up button. In the case of this
-                // activity, the Up button is shown. Use NavUtils to allow users
-                // to navigate up one level in the application structure. For
-                // more details, see the Navigation pattern on Android Design:
-                //
-                // http://developer.android.com/design/patterns/navigation.html#up-vs-back
-                //
                 NavUtils.navigateUpTo(this, new Intent(this, MovieListActivity.class));
                 return true;
 
