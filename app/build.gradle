@@ -107,10 +107,12 @@ dependencies {
 
     //Unit Testing
     testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:2.1.0-beta.120'
+    testCompile 'org.mockito:mockito-core:1.10.19'
+    testCompile "org.robolectric:robolectric:3.1.2"
     testCompile 'org.hamcrest:hamcrest-all:1.3'
     testCompile 'org.powermock:powermock-api-mockito:1.6.5'
     testCompile 'org.powermock:powermock-module-junit4:1.6.5'
+    testApt 'com.google.dagger:dagger-compiler:2.6.1'
 
     //Instrumentation Testing
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2') {

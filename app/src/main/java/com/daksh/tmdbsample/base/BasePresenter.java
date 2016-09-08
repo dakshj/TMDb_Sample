@@ -7,7 +7,7 @@ public interface BasePresenter<V> {
 
     void start();
 
-    void setView(V view);
+    void attachView(V view);
 
-    void destroy();
+    void detachView();
 }

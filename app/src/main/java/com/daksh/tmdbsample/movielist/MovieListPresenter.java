@@ -36,7 +36,7 @@ public class MovieListPresenter implements MovieListContract.Presenter {
     @Inject
     public MovieListPresenter(@NonNull MovieListContract.View view,
             @NonNull TmdbApi api, @NonNull AppSettings appSettings) {
-        viewRef = new WeakReference<>(view);
+        attachView(view);
         this.api = api;
         this.appSettings = appSettings;
     }
@@ -47,8 +47,8 @@ public class MovieListPresenter implements MovieListContract.Presenter {
     }
 
     @Override
-    public void destroy() {
-        viewRef = null;
+    public void attachView(MovieListContract.View view) {
+        viewRef = new WeakReference<>(view);
     }
 
     private MovieListContract.View getView() throws NullPointerException {
@@ -60,8 +60,8 @@ public class MovieListPresenter implements MovieListContract.Presenter {
     }
 
     @Override
-    public void setView(MovieListContract.View view) {
-        viewRef = new WeakReference<>(view);
+    public void detachView() {
+        viewRef = null;
     }
 
     @Override
