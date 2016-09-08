@@ -1,7 +1,6 @@
 package com.daksh.tmdbsample.di.module;
 
 import com.daksh.tmdbsample.di.scope.ActivityScope;
-import com.daksh.tmdbsample.movielist.MovieListActivity;
 import com.daksh.tmdbsample.movielist.MovieListContract;
 
 import dagger.Module;
@@ -14,15 +13,15 @@ import dagger.Provides;
 @Module
 public class MovieListModule {
 
-    private final MovieListActivity activity;
+    private final MovieListContract.View view;
 
-    public MovieListModule(MovieListActivity activity) {
-        this.activity = activity;
+    public MovieListModule(MovieListContract.View view) {
+        this.view = view;
     }
 
     @Provides
     @ActivityScope
     MovieListContract.View provideMovieListView() {
-        return activity;
+        return view;
     }
 }

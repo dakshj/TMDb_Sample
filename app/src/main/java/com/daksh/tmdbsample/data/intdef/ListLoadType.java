@@ -13,7 +13,7 @@ public class ListLoadType {
 
     public static final int FIRST = 0;
     public static final int SWIPE_REFRESH = 1;
-    public static final int INFINITE_SCROLL = 2;
+    public static final int ENDLESS_SCROLL = 2;
 
     public final int value;
 
@@ -22,6 +22,6 @@ public class ListLoadType {
     }
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({FIRST, SWIPE_REFRESH, INFINITE_SCROLL})
+    @IntDef({FIRST, SWIPE_REFRESH, ENDLESS_SCROLL})
     public @interface ListLoadTypeDef {}
 }

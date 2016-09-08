@@ -52,14 +52,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="@string/loading_failed_message"/>
+                        android:layout_marginBottom="20dp"
+                        android:text="@string/loading_failed_message"
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                     <Button
                         android:id="@+id/buttonError"
+                        style="@style/Widget.AppCompat.Button.Borderless.Colored"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/textError"
                         android:layout_centerHorizontal="true"
+                        android:padding="20dp"
                         android:text="@string/loading_failed_button_test"/>
 
                     <!--TODO Add retry button here, and improve the TextView!-->

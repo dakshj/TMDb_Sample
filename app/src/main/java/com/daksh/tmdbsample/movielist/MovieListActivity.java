@@ -18,6 +18,7 @@ import com.daksh.tmdbsample.databinding.ActivityMovieListBinding;
 import com.daksh.tmdbsample.databinding.ActivityMovieListSortDialogBinding;
 import com.daksh.tmdbsample.di.component.AppComponent;
 import com.daksh.tmdbsample.di.module.MovieListModule;
+import com.daksh.tmdbsample.util.EndlessRecyclerViewScrollListener;
 
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
     private boolean twoPane;
     private ActivityMovieListBinding B;
     private MovieListAdapter adapter;
+    private EndlessRecyclerViewScrollListener scrollListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +83,19 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
     private void setUpGrid() {
         adapter = new MovieListAdapter(movie -> presenter.openMovieDetails(movie));
 
-        B.layoutMovieList.listMovie.setLayoutManager(new GridLayoutManager(this, GRID_COLUMNS));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, GRID_COLUMNS);
+
+        B.layoutMovieList.listMovie.setLayoutManager(gridLayoutManager);
         B.layoutMovieList.listMovie.setAdapter(adapter);
+
+        scrollListener = new EndlessRecyclerViewScrollListener(gridLayoutManager) {
+            @Override
+            public void onLoadMore(int pageIndex, int totalItemCount) {
+                presenter.startNextPageLoad(pageIndex + 1);
+            }
+        };
+
+        B.layoutMovieList.listMovie.addOnScrollListener(scrollListener);
 
         B.layoutMovieList.swipeRefreshLayout.setOnRefreshListener(() ->
                 presenter.startSwipeRefresh());
@@ -191,14 +204,28 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
     }
 
     @Override
-    public void stopInfiniteScroll() {
-        //TODO
+    public void stopNextPageLoad() {
+        //Not required unless a loading footer is shown in the RecyclerView
     }
 
     @Override
     public void scrollListToTop() {
         if (adapter.getItemCount() > 0) {
             B.layoutMovieList.listMovie.smoothScrollToPosition(0);
+        }
+    }
+
+    @Override
+    public void pageLoadingFailed(Integer page) {
+        if (page != null && scrollListener != null) {
+            scrollListener.loadingFailed(page - 1);
+        }
+    }
+
+    @Override
+    public void setTotalListPages(long totalPages) {
+        if (scrollListener != null) {
+            scrollListener.setLastPageIndex(totalPages - 1);
         }
     }
 }

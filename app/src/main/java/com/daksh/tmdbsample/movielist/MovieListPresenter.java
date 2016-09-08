@@ -43,7 +43,7 @@ public class MovieListPresenter implements MovieListContract.Presenter {
 
     @Override
     public void start() {
-        loadMovies(null, appSettings.getSortOrder(), new ListLoadType(ListLoadType.FIRST));
+        loadMovies(null, new ListLoadType(ListLoadType.FIRST));
     }
 
     @Override
@@ -64,8 +64,9 @@ public class MovieListPresenter implements MovieListContract.Presenter {
         viewRef = null;
     }
 
-    @Override
-    public void loadMovies(final Integer page, SortOrder sortOrder, final ListLoadType listLoadType) {
+    private void loadMovies(final Integer page, final ListLoadType listLoadType) {
+        SortOrder sortOrder = appSettings.getSortOrder();
+
         if (listLoadType.value == ListLoadType.FIRST) {
             getView().showLoading();
         }
@@ -103,16 +104,30 @@ public class MovieListPresenter implements MovieListContract.Presenter {
                                 getView().stopSwipeRefresh();
                                 break;
 
-                            case ListLoadType.INFINITE_SCROLL:
+                            case ListLoadType.ENDLESS_SCROLL:
                                 getView().addMovies(response.getMovies());
-                                getView().stopInfiniteScroll();
+                                getView().stopNextPageLoad();
                                 break;
                         }
+
+                        getView().setTotalListPages(response.getTotalPages());
                     }
 
                     @Override
                     public void onError(Throwable error) {
-                        getView().showError();
+                        switch (listLoadType.value) {
+                            case ListLoadType.FIRST:
+                                getView().showError();
+                                break;
+
+                            case ListLoadType.SWIPE_REFRESH:
+                                getView().stopSwipeRefresh();
+                                break;
+
+                            case ListLoadType.ENDLESS_SCROLL:
+                                getView().pageLoadingFailed(page);
+                                break;
+                        }
                     }
                 });
     }
@@ -133,12 +148,17 @@ public class MovieListPresenter implements MovieListContract.Presenter {
 
         if (currentSortOrder.value != sortOrder.value) {
             appSettings.setSortOrder(sortOrder);
-            loadMovies(null, sortOrder, new ListLoadType(ListLoadType.FIRST));
+            loadMovies(null, new ListLoadType(ListLoadType.FIRST));
         }
     }
 
     @Override
     public void startSwipeRefresh() {
-        loadMovies(null, appSettings.getSortOrder(), new ListLoadType(ListLoadType.SWIPE_REFRESH));
+        loadMovies(null, new ListLoadType(ListLoadType.SWIPE_REFRESH));
+    }
+
+    @Override
+    public void startNextPageLoad(Integer page) {
+        loadMovies(page, new ListLoadType(ListLoadType.ENDLESS_SCROLL));
     }
 }

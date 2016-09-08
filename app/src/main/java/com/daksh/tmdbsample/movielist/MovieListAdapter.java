@@ -70,8 +70,9 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     }
 
     public void addMovies(@NonNull List<Movie> movies) {
+        int currentSize = getItemCount();
         this.movies.addAll(movies);
-        notifyItemRangeInserted(getItemCount(), movies.size());
+        notifyItemRangeInserted(currentSize, movies.size());
     }
 
     public interface ItemClickListener {
