@@ -18,6 +18,8 @@ import com.daksh.tmdbsample.di.component.AppComponent;
 import com.daksh.tmdbsample.movielist.MovieListActivity;
 import com.daksh.tmdbsample.util.Logger;
 
+import icepick.State;
+
 /**
  * An activity representing a single Movie detail screen. This
  * activity is only used narrow width devices. On tablet-size devices,
@@ -26,6 +28,9 @@ import com.daksh.tmdbsample.util.Logger;
  */
 public class MovieDetailActivity extends BaseActivity implements MovieDetailContract.View {
 
+    @State
+    Movie movie;
+
     private ActivityMovieDetailBinding B;
 
     public static void start(@NonNull Context context, @NonNull Movie movie) {
@@ -33,6 +38,11 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
                 new Intent(context, MovieDetailActivity.class)
                         .putExtra(MovieDetailFragment.ARG_MOVIE, movie)
         );
+    }
+
+    @Override
+    public void injectActivity(AppComponent appComponent) {
+        //Not needed
     }
 
     @Override
@@ -54,7 +64,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
         // In this case, the fragment will automatically be re-added
         // to its container so we don't need to manually add it.
         if (savedInstanceState == null) {
-            Movie movie = getIntent().getParcelableExtra(MovieDetailFragment.ARG_MOVIE);
+            movie = getIntent().getParcelableExtra(MovieDetailFragment.ARG_MOVIE);
 
             if (movie == null) {
                 Logger.errorLog("Movie is null in MovieDetailActivity!");
@@ -65,14 +75,11 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.movieDetailContainer, MovieDetailFragment.get(movie))
                     .commit();
+        }
 
+        if (movie != null) {
             B.setMovie(movie);
         }
-    }
-
-    @Override
-    public void injectActivity(AppComponent appComponent) {
-        //Not needed
     }
 
     @Override

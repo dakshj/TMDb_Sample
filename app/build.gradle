@@ -104,6 +104,8 @@ dependencies {
 
     //Miscellaneous
     compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'frankiesardo:icepick:3.2.0'
+    provided 'frankiesardo:icepick-processor:3.2.0'
 
     //Unit Testing
     testCompile 'junit:junit:4.12'

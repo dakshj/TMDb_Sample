@@ -15,6 +15,8 @@ import com.daksh.tmdbsample.di.component.AppComponent;
 import com.daksh.tmdbsample.di.module.MovieDetailModule;
 import com.daksh.tmdbsample.movielist.MovieListActivity;
 
+import javax.inject.Inject;
+
 /**
  * A fragment representing a single Movie detail screen.
  * This fragment is either contained in a {@link MovieListActivity}
@@ -24,6 +26,9 @@ import com.daksh.tmdbsample.movielist.MovieListActivity;
 public class MovieDetailFragment extends BaseFragment implements MovieDetailContract.View {
 
     public static final String ARG_MOVIE = "movie";
+
+    @Inject
+    MovieDetailPresenter presenter;
 
     private Movie movie;
     private MovieDetailBinding B;
@@ -45,17 +50,17 @@ public class MovieDetailFragment extends BaseFragment implements MovieDetailCont
     }
 
     @Override
+    public void injectFragment(AppComponent applicationComponent) {
+        applicationComponent.getMovieDetailComponent(new MovieDetailModule(this)).inject(this);
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (getArguments().containsKey(ARG_MOVIE)) {
             movie = getArguments().getParcelable(ARG_MOVIE);
         }
-    }
-
-    @Override
-    public void injectFragment(AppComponent applicationComponent) {
-        applicationComponent.getMovieDetailComponent(new MovieDetailModule(this)).inject(this);
     }
 
     @Override

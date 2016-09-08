@@ -37,6 +37,11 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
     private EndlessRecyclerViewScrollListener scrollListener;
 
     @Override
+    public void injectActivity(AppComponent appComponent) {
+        appComponent.getMovieListComponent(new MovieListModule(this)).inject(this);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -97,11 +102,6 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
 
     private void setUpErrorLayout() {
         B.buttonError.setOnClickListener(view -> presenter.start());
-    }
-
-    @Override
-    public void injectActivity(AppComponent appComponent) {
-        appComponent.getMovieListComponent(new MovieListModule(this)).inject(this);
     }
 
     public boolean isTwoPane() {
