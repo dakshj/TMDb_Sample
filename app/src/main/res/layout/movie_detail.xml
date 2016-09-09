@@ -14,8 +14,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp">
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/textSynopsis"

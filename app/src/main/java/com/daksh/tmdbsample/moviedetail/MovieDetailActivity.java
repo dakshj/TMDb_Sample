@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.daksh.tmdbsample.R;
@@ -50,8 +49,10 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
         super.onCreate(savedInstanceState);
         B = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarDetail);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(B.toolbar);
+
+        B.toolbar.setTitle("");
+        setSupportActionBar(B.toolbar);
 
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();

@@ -23,19 +23,14 @@
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/app_bar_height"
-            android:fitsSystemWindows="true"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/toolbarLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:fitsSystemWindows="true"
                 app:contentScrim="?attr/colorPrimary"
-                app:expandedTitleGravity="bottom|center_horizontal"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:title="@{movie.title}"
-                app:toolbarId="@+id/toolbar">
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <ImageView
                     android:id="@+id/imageBackdrop"
@@ -48,11 +43,44 @@
                     app:layout_collapseParallaxMultiplier="0.5"/>
 
                 <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbarDetail"
+                    android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+                <com.sloydev.collapsingavatartoolbar.CollapsingAvatarToolbar
+                    android:id="@+id/collapsingAvatarToolbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="?attr/actionBarSize"
+                    app:collapsedImageSize="?attr/actionBarSize"
+                    app:collapsedPadding="36dp"
+                    app:expandedImageSize="100dp"
+                    app:expandedTextSize="28sp">
+
+                    <ImageView
+                        android:id="@id/cat_avatar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/image_content_poster"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
+                        app:posterImageUrl="@{movie.posterImageUrl}"/>
+
+                    <TextView
+                        android:id="@id/cat_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@{movie.title}"
+                        android:textColor="@android:color/white"/>
+
+                </com.sloydev.collapsingavatartoolbar.CollapsingAvatarToolbar>
 
             </android.support.design.widget.CollapsingToolbarLayout>
 
