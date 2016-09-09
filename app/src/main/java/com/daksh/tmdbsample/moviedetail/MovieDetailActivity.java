@@ -86,10 +86,10 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
         super.onCreate(savedInstanceState);
         B = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail);
 
-        setSupportActionBar(B.toolbar);
+        setSupportActionBar(B.layoutAppBarLayout.toolbar);
 
-        B.toolbar.setTitle("");
-        setSupportActionBar(B.toolbar);
+        B.layoutAppBarLayout.toolbar.setTitle("");
+        setSupportActionBar(B.layoutAppBarLayout.toolbar);
 
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
