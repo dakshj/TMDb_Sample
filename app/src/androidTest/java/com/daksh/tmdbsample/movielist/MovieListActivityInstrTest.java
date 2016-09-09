@@ -16,15 +16,10 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static android.support.test.espresso.matcher.RootMatchers.isDialog;
-import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.startsWith;
-import static org.hamcrest.core.IsNot.not;
 
 /**
  * Created by daksh on 08-09-2016.
@@ -34,11 +29,11 @@ import static org.hamcrest.core.IsNot.not;
 @LargeTest
 public class MovieListActivityInstrTest extends TestCase {
 
-    MovieListActivity activity;
-
     @Rule
     public final ActivityTestRule<MovieListActivity> rule =
             new ActivityTestRule<>(MovieListActivity.class);
+
+    private MovieListActivity activity;
 
     @Before
     public void init() {
@@ -82,17 +77,14 @@ public class MovieListActivityInstrTest extends TestCase {
                 .check(matches(isDisplayed()));
     }
 
-    //TODO replace the below test with a test to check for either next activity opened
-    //on a phone, or the side container filled on a tab
-
-    @Test
-    public void shouldShowToastAfterClickingOnListItem() {
-        onView(withId(R.id.listMovie))
-                .perform(actionOnItemAtPosition(0, click()));
-
-        onView(withText(startsWith("Clicked on ")))
-                .inRoot(withDecorView(
-                        not(is(activity.getWindow().getDecorView()))))
-                .check(matches(isDisplayed()));
-    }
+//    @Test
+//    public void shouldShowToastAfterClickingOnListItem() {
+//        onView(withId(R.id.listMovie))
+//                .perform(actionOnItemAtPosition(0, click()));
+//
+//        onView(withText(startsWith("Clicked on ")))
+//                .inRoot(withDecorView(
+//                        not(is(activity.getWindow().getDecorView()))))
+//                .check(matches(isDisplayed()));
+//    }
 }
