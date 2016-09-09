@@ -9,6 +9,7 @@ import com.daksh.tmdbsample.data.model.Movie;
 import com.daksh.tmdbsample.data.model.MovieListApiResponse;
 import com.daksh.tmdbsample.data.source.local.AppSettings;
 import com.daksh.tmdbsample.data.source.remote.TmdbApi;
+import com.daksh.tmdbsample.databinding.MovieListItemBinding;
 import com.daksh.tmdbsample.di.scope.ActivityScope;
 
 import javax.inject.Inject;
@@ -119,8 +120,8 @@ public class MovieListPresenter extends BasePresenterImpl<MovieListContract.View
     }
 
     @Override
-    public void openMovieDetails(@NonNull Movie movie) {
-        getView().showMovieDetails(movie);
+    public void openMovieDetails(@NonNull Movie movie, @NonNull MovieListItemBinding B) {
+        getView().showMovieDetails(movie, B);
     }
 
     @Override

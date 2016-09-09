@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
@@ -32,16 +34,51 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
 
     private ActivityMovieDetailBinding B;
 
+    /**
+     * Used for starting {@link MovieDetailActivity} with no transitions.
+     *
+     * @param context Context using which {@link MovieDetailActivity} can be started.
+     * @param movie   The {@link Movie} to be loaded.
+     */
     public static void start(@NonNull Context context, @NonNull Movie movie) {
-        context.startActivity(
-                new Intent(context, MovieDetailActivity.class)
-                        .putExtra(MovieDetailFragment.ARG_MOVIE, movie)
-        );
+        context.startActivity(getCallingIntent(context, movie));
+    }
+
+    /**
+     * Used for starting {@link MovieDetailActivity} with Shared Element Transition of the
+     * Poster Image.
+     *
+     * @param context                       Context using which {@link MovieDetailActivity} can be started.
+     * @param movie                         The {@link Movie} to be loaded.
+     * @param profileImageTransitionOptions The Shared Element Transition for the Poster Image.
+     */
+    public static void start(@NonNull Context context, @NonNull Movie movie,
+            @Nullable ActivityOptionsCompat profileImageTransitionOptions) {
+        Intent intent = getCallingIntent(context, movie);
+
+        if (profileImageTransitionOptions != null) {
+            context.startActivity(intent, profileImageTransitionOptions.toBundle());
+        } else {
+            context.startActivity(intent);
+        }
+    }
+
+    /**
+     * Intent from which {@link MovieDetailActivity} can be started.
+     *
+     * @param context Context using which {@link MovieDetailActivity} can be started.
+     * @param movie   The {@link Movie} to be loaded.
+     * @return Calling Intent for {@link MovieDetailActivity}.
+     */
+    public static Intent getCallingIntent(@NonNull Context context, @NonNull Movie movie) {
+        return new Intent(context, MovieDetailActivity.class)
+                .putExtra(MovieDetailFragment.ARG_MOVIE, movie);
     }
 
     @Override
     public void injectActivity(AppComponent appComponent) {
-        //Not needed
+        // Not needed because injection is performed and injected dependencies are
+        // used in MovieDetailFragment.
     }
 
     @Override

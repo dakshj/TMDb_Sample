@@ -1,7 +1,9 @@
 package com.daksh.tmdbsample.movielist;
 
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import com.daksh.tmdbsample.data.intdef.SortOrder;
 import com.daksh.tmdbsample.data.model.Movie;
 import com.daksh.tmdbsample.databinding.ActivityMovieListBinding;
 import com.daksh.tmdbsample.databinding.ActivityMovieListSortDialogBinding;
+import com.daksh.tmdbsample.databinding.MovieListItemBinding;
 import com.daksh.tmdbsample.di.component.AppComponent;
 import com.daksh.tmdbsample.di.module.MovieListModule;
 import com.daksh.tmdbsample.moviedetail.MovieDetailActivity;
@@ -80,7 +83,7 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
     }
 
     private void setUpGrid() {
-        adapter = new MovieListAdapter(movie -> presenter.openMovieDetails(movie));
+        adapter = new MovieListAdapter((movie, B) -> presenter.openMovieDetails(movie, B));
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, GRID_COLUMNS);
 
@@ -174,13 +177,22 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
     }
 
     @Override
-    public void showMovieDetails(Movie movie) {
+    public void showMovieDetails(Movie movie, MovieListItemBinding B) {
         if (isTwoPane()) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.movieDetailContainer, MovieDetailFragment.get(movie))
                     .commit();
         } else {
-            MovieDetailActivity.start(this, movie);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                //Shared Element Transition of Poster Image from Master List to Detail screen
+                ActivityOptionsCompat profileImageTransitionOptions = ActivityOptionsCompat
+                        .makeSceneTransitionAnimation(this, B.imagePoster,
+                                getString(R.string.poster_image_transition));
+
+                MovieDetailActivity.start(this, movie, profileImageTransitionOptions);
+            } else {
+                MovieDetailActivity.start(this, movie);
+            }
         }
     }
 

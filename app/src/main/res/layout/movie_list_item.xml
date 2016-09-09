@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -17,6 +18,8 @@
         android:layout_height="0dp"
         android:contentDescription="@string/image_content_poster"
         android:scaleType="centerCrop"
-        app:posterImageUrl="@{movie.posterImageUrl}"/>
+        android:transitionName="@string/poster_image_transition"
+        app:posterImageUrl="@{movie.posterImageUrl}"
+        tools:targetApi="lollipop"/>
 
 </layout>

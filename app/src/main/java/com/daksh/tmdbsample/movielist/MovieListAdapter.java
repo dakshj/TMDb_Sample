@@ -71,7 +71,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     }
 
     public interface ItemClickListener {
-        void onItemClicked(Movie movie);
+        void onItemClicked(@NonNull Movie movie, @NonNull MovieListItemBinding B);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -91,7 +91,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
         @Override
         public void onClick(View view) {
-            itemClickListener.onItemClicked(movie);
+            itemClickListener.onItemClicked(movie, B);
         }
     }
 }

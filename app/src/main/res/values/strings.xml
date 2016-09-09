@@ -12,5 +12,6 @@
     <string name="dialog_sort_order_title">Select a sort order</string>
     <string name="loading_failed_button_test">Try Again</string>
     <string name="loading_failed_message">Failed to load movies!</string>
+    <string name="poster_image_transition" translatable="false">Poster Image Transition</string>
 
 </resources>

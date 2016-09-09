@@ -67,7 +67,9 @@
                         android:contentDescription="@string/image_content_poster"
                         android:paddingBottom="5dp"
                         android:paddingTop="5dp"
-                        app:posterImageUrl="@{movie.posterImageUrl}"/>
+                        android:transitionName="@string/poster_image_transition"
+                        app:posterImageUrl="@{movie.posterImageUrl}"
+                        tools:targetApi="lollipop"/>
 
                     <TextView
                         android:id="@id/cat_title"

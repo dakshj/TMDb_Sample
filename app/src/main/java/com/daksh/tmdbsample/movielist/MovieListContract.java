@@ -4,6 +4,7 @@ import com.daksh.tmdbsample.base.BasePresenter;
 import com.daksh.tmdbsample.base.BaseView;
 import com.daksh.tmdbsample.data.intdef.SortOrder;
 import com.daksh.tmdbsample.data.model.Movie;
+import com.daksh.tmdbsample.databinding.MovieListItemBinding;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public interface MovieListContract {
 
         void showSortOrderSelector(SortOrder currentSortOrder);
 
-        void showMovieDetails(Movie movie);
+        void showMovieDetails(Movie movie, MovieListItemBinding B);
 
         void stopSwipeRefresh();
 
@@ -41,7 +42,7 @@ public interface MovieListContract {
 
         void openSortOrderSelector();
 
-        void openMovieDetails(Movie movie);
+        void openMovieDetails(Movie movie, MovieListItemBinding B);
 
         void setSortOrder(SortOrder sortOrder);
 
