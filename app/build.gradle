@@ -48,7 +48,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
         }
@@ -95,6 +95,7 @@ dependencies {
 
     //ReactiveX
     compile 'io.reactivex:rxjava:1.1.9'
+    compile 'com.artemzin.rxjava:proguard-rules:1.1.9.0'
     compile 'io.reactivex:rxandroid:1.2.1'
 
     //Dependency Injection
