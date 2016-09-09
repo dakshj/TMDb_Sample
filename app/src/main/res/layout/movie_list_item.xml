@@ -15,7 +15,7 @@
         android:id="@+id/imagePoster"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:contentDescription="@string/movie_list_poster_image"
+        android:contentDescription="@string/image_content_poster"
         android:scaleType="centerCrop"
         app:posterImageUrl="@{movie.posterImageUrl}"/>
 

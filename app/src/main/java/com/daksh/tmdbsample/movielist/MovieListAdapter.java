@@ -19,11 +19,6 @@ import java.util.List;
  */
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.ViewHolder> {
 
-    /**
-     * (Height / Width) Aspect Ratio of Poster Image
-     */
-    private static final double IMAGE_ASPECT_RATIO = 1.5;
-
     @NonNull
     private final ItemClickListener itemClickListener;
     private List<Movie> movies;
@@ -44,7 +39,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
          * images when an image is not yet loaded.
          */
         B.imagePoster.post(() -> B.imagePoster.getLayoutParams().height =
-                (int) ((double) B.imagePoster.getWidth() * IMAGE_ASPECT_RATIO));
+                (int) ((double) B.imagePoster.getWidth() * Movie.POSTER_IMAGE_ASPECT_RATIO));
 
         return new ViewHolder(B, itemClickListener);
     }

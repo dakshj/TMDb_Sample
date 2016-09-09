@@ -28,6 +28,16 @@ public class Movie implements Parcelable {
     };
 
     /**
+     * (Height / Width) Aspect Ratio of Poster Image
+     */
+    public static final double POSTER_IMAGE_ASPECT_RATIO = 1.5;
+
+    /**
+     * (Width / Height) Aspect Ratio of Backdrop Image
+     */
+    public static final double BACKDROP_IMAGE_ASPECT_RATIO = 1.77;
+
+    /**
      * Poster Image Quality in terms of width in px
      */
     private static final String POSTER_IMAGE_QUALITY = "w500";
