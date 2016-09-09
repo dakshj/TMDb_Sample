@@ -17,6 +17,12 @@
 #}
 
 
+# Unclassified
+-dontnote android.net.http.**
+-dontnote org.apache.http.**
+-dontnote com.google.vending.**
+
+
 # Retrolambda
 -dontwarn java.lang.invoke.*
 
@@ -31,11 +37,13 @@
 -keepnames class * { @icepick.State *;}
 
 
-# Android Support
+# support-v4
+-keep class android.support.v4.** { *; }
 -dontwarn android.support.**
+-dontnote android.support.v4.**
 
 
-# AppCompat
+# support-v7
 -keep public class android.support.v7.widget.** { *; }
 -keep public class android.support.v7.internal.widget.** { *; }
 -keep public class android.support.v7.internal.view.menu.** { *; }
@@ -87,6 +95,7 @@
 -keep class okhttp3.** { *; }
 -keep interface okhttp3.** { *; }
 -dontwarn okhttp3.**
+-dontwarn okio.**
 
 
 # Picasso
@@ -101,6 +110,9 @@
 -dontwarn java.lang.ClassValue
 -dontwarn com.google.j2objc.annotations.Weak
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+-dontnote com.google.common.**
+-dontnote com.google.util.**
+-dontnote com.google.thirdparty.**
 
 
 # EventBus 3.0.0
