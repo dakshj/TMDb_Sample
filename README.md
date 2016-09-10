@@ -1,4 +1,4 @@
-#The Movie Database ([TMDb](https://www.themoviedb.org/)) Sample Android App
+#The Movie Database ([TMDb](https://www.themoviedb.org/)) Sample Android App [![Build Status](https://travis-ci.org/dakshj/TMDb_Sample.svg?branch=master)](https://travis-ci.org/dakshj/TMDb_Sample)
 
 ##Architectural Pattern
 The Model-View-Presenter architectural pattern has been used to build this app.
