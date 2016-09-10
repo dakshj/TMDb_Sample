@@ -52,7 +52,7 @@
                 app:expandedTextSize="28sp">
 
                 <ImageView
-                    android:id="@id/cat_avatar"
+                    android:id="@+id/cat_avatar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
@@ -65,7 +65,7 @@
                     tools:targetApi="lollipop"/>
 
                 <TextView
-                    android:id="@id/cat_title"
+                    android:id="@+id/cat_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
