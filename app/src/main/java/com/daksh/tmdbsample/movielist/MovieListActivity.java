@@ -38,6 +38,7 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
     private ActivityMovieListBinding B;
     private MovieListAdapter adapter;
     private EndlessRecyclerViewScrollListener scrollListener;
+    private MovieDetailFragment fragmentTwoPane;
 
     @Override
     public void injectActivity(AppComponent appComponent) {
@@ -179,8 +180,10 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
     @Override
     public void showMovieDetails(Movie movie, MovieListItemBinding B) {
         if (isTwoPane()) {
+            fragmentTwoPane = MovieDetailFragment.get(movie);
+
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.movieDetailContainer, MovieDetailFragment.get(movie))
+                    .replace(R.id.movieDetailContainer, fragmentTwoPane)
                     .commit();
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -224,6 +227,17 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
     public void setTotalListPages(long totalPages) {
         if (scrollListener != null) {
             scrollListener.setLastPageIndex(totalPages - 1);
+        }
+    }
+
+    @Override
+    public void dismissMovieDetails() {
+        if (isTwoPane() && fragmentTwoPane != null) {
+            getSupportFragmentManager().beginTransaction()
+                    .remove(fragmentTwoPane)
+                    .commit();
+
+            fragmentTwoPane = null;
         }
     }
 }

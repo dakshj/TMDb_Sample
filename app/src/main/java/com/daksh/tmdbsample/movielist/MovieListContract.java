@@ -36,6 +36,8 @@ public interface MovieListContract {
         void pageLoadingFailed(Integer page);
 
         void setTotalListPages(long totalPages);
+
+        void dismissMovieDetails();
     }
 
     interface Presenter extends BasePresenter<View> {

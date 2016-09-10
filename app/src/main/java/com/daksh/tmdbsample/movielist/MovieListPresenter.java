@@ -79,6 +79,7 @@ public class MovieListPresenter extends BasePresenterImpl<MovieListContract.View
                             case ListLoadType.FIRST:
                                 getView().showMovies(response.getMovies());
                                 getView().scrollListToTop();
+                                getView().dismissMovieDetails();
                                 break;
 
                             case ListLoadType.SWIPE_REFRESH:
