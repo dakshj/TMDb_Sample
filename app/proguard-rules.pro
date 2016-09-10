@@ -21,6 +21,7 @@
 -dontnote android.net.http.**
 -dontnote org.apache.http.**
 -dontnote com.google.vending.**
+-dontnote org.apache.commons.codec.**
 
 
 # Retrolambda
@@ -58,6 +59,10 @@
 -keep class android.support.design.** { *; }
 -keep interface android.support.design.** { *; }
 -keep public class android.support.design.R$* { *; }
+
+
+#CardView
+-keep class android.support.v7.widget.RoundRectDrawable { *; }
 
 
 # Retrofit 2
