@@ -4,11 +4,16 @@ import android.databinding.BindingAdapter;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.gson.annotations.SerializedName;
 import com.squareup.picasso.Picasso;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by daksh on 03-Sep-16.
@@ -89,7 +94,7 @@ public class Movie implements Parcelable {
     }
 
     /**
-     * Function used by DataBinding to load a poster image into an ImageView
+     * Function used by DataBinding to load the poster image into an ImageView
      * by calling {@link Movie#posterImageUrl}
      */
     @BindingAdapter({"posterImageUrl"})
@@ -98,7 +103,7 @@ public class Movie implements Parcelable {
     }
 
     /**
-     * Function used by DataBinding to load a backdrop image into an ImageView
+     * Function used by DataBinding to load the backdrop image into an ImageView
      * by calling {@link Movie#backdropImageUrl}
      */
     @BindingAdapter({"backdropImageUrl"})
@@ -110,6 +115,41 @@ public class Movie implements Parcelable {
         Picasso.with(view.getContext())
                 .load(imageUrl)
                 .into(view);
+    }
+
+    /**
+     * Function used by DataBinding to load the user rating into a TextView
+     * by calling {@link Movie#userRating}
+     */
+    @BindingAdapter({"userRating"})
+    public static void loadUserRating(TextView view, double userRating) {
+        view.setText(String.valueOf(round(userRating, 2)).concat(" / 10"));
+    }
+
+    /**
+     * Safely round a double to required places.
+     * <br/>
+     * <strong>Read:</strong> http://stackoverflow.com/a/2808648/1558717
+     *
+     * @param value  The value to be rounded
+     * @param places The decimal places to round the value to
+     * @return The rounded value
+     */
+    private static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
+
+    /**
+     * Function used by DataBinding to load the release date into a TextView
+     * by calling {@link Movie#releaseDate}
+     */
+    @BindingAdapter({"releaseDate"})
+    public static void loadReleaseDate(TextView view, Date releaseDate) {
+        view.setText(new SimpleDateFormat("d MMM, y", Locale.getDefault()).format(releaseDate));
     }
 
     public String getTitle() {

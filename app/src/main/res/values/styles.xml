@@ -4,6 +4,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textViewStyle">@style/TextViewStyle</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -14,5 +15,28 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <style name="CardViewStyle" parent="CardView">
+        <item name="android:layout_margin">10dp</item>
+        <item name="cardCornerRadius">4dp</item>
+        <item name="contentPadding">20dp</item>
+    </style>
+
+    <style name="TextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="HeaderTextView" parent="android:Widget.TextView">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:layout_marginBottom">5dp</item>
+    </style>
+
+    <style name="DetailTextView" parent="android:Widget.TextView">
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:textIsSelectable">true</item>
+    </style>
 
 </resources>

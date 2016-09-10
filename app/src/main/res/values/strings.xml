@@ -13,5 +13,8 @@
     <string name="loading_failed_button_test">Try Again</string>
     <string name="loading_failed_message">Failed to load movies!</string>
     <string name="poster_image_transition" translatable="false">Poster Image Transition</string>
+    <string name="synopsis">Synopsis</string>
+    <string name="userRating">User Rating</string>
+    <string name="releaseDate">Release Date</string>
 
 </resources>

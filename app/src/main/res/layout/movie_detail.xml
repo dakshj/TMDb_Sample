@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -16,15 +16,104 @@
         android:layout_height="match_parent"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/textSynopsis"
-            style="?android:attr/textAppearanceMedium"
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardViewRatingReleaseDate"
+            style="@style/CardViewStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="@{movie.synopsis}"
-            android:textIsSelectable="true"
-            tools:context=".moviedetail.MovieDetailFragment"/>
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:divider="@drawable/divider_vertical"
+                android:orientation="horizontal"
+                android:showDividers="middle">
+
+                <LinearLayout
+                    android:id="@+id/layoutUserRating"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textUserRatingHeader"
+                        style="@style/HeaderTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/userRating"/>
+
+                    <TextView
+                        android:id="@+id/textUserRating"
+                        style="@style/DetailTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        app:userRating="@{movie.userRating}"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutReleaseDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textReleaseDateHeader"
+                        style="@style/HeaderTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/releaseDate"/>
+
+                    <TextView
+                        android:id="@+id/textReleaseDate"
+                        style="@style/DetailTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        app:releaseDate="@{movie.releaseDate}"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardViewSynopsis"
+            style="@style/CardViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/cardViewRatingReleaseDate">
+
+            <LinearLayout
+                android:id="@+id/layoutSynopsis"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textSynopsisHeader"
+                    style="@style/HeaderTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/synopsis"/>
+
+                <TextView
+                    android:id="@+id/textSynopsis"
+                    style="@style/DetailTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{movie.synopsis}"/>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
 
     </RelativeLayout>
 
