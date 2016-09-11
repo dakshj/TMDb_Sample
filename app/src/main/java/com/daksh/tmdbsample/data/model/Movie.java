@@ -32,6 +32,8 @@ public class Movie implements Parcelable {
         }
     };
 
+    public static final String USER_RATING_APPEND = " / 10";
+
     /**
      * (Height / Width) Aspect Ratio of Poster Image
      */
@@ -123,7 +125,26 @@ public class Movie implements Parcelable {
      */
     @BindingAdapter({"userRating"})
     public static void loadUserRating(TextView view, double userRating) {
-        view.setText(String.valueOf(round(userRating, 2)).concat(" / 10"));
+        view.setText(getFormattedUserRating(userRating));
+    }
+
+    /**
+     * @param userRating The {@link Movie#userRating} of a {@link Movie}.
+     * @return A formatted String of the {@link Movie#userRating} for displaying purposes.
+     */
+    public static String getFormattedUserRating(double userRating) {
+        double rounded = round(userRating, 2);
+
+        String formatted;
+
+        // Used to remove any redundant decimal zeroes.
+        if (rounded == (long) rounded) {
+            formatted = String.format(Locale.getDefault(), "%d", (long) rounded);
+        } else {
+            formatted = String.format("%s", rounded);
+        }
+
+        return formatted.concat(USER_RATING_APPEND);
     }
 
     /**
@@ -149,7 +170,15 @@ public class Movie implements Parcelable {
      */
     @BindingAdapter({"releaseDate"})
     public static void loadReleaseDate(TextView view, Date releaseDate) {
-        view.setText(new SimpleDateFormat("d MMM, y", Locale.getDefault()).format(releaseDate));
+        view.setText(getFormattedReleaseDate(releaseDate));
+    }
+
+    /**
+     * @param releaseDate The {@link Movie#releaseDate} of a {@link Movie}.
+     * @return A formatted String of the {@link Movie#releaseDate} for displaying purposes.
+     */
+    public static String getFormattedReleaseDate(Date releaseDate) {
+        return new SimpleDateFormat("d MMM, y", Locale.getDefault()).format(releaseDate);
     }
 
     public String getTitle() {
