@@ -33,7 +33,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class MovieListActivityInstrTest extends TestCase {
+public class MovieListActivityTest extends TestCase {
 
     @Rule
     public final IntentsTestRule<MovieListActivity> rule =
