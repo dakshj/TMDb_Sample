@@ -111,7 +111,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
             }
 
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.movieDetailContainer, MovieDetailFragment.get(movie))
+                    .add(R.id.movieDetailContainer, MovieDetailFragment.newInstance(movie))
                     .commit();
         }
 

@@ -40,7 +40,7 @@ public class MovieDetailFragment extends BaseFragment implements MovieDetailCont
     public MovieDetailFragment() {
     }
 
-    public static MovieDetailFragment get(@NonNull final Movie movie) {
+    public static MovieDetailFragment newInstance(@NonNull final Movie movie) {
         Bundle arguments = new Bundle();
         arguments.putParcelable(MovieDetailFragment.ARG_MOVIE, movie);
         MovieDetailFragment fragment = new MovieDetailFragment();

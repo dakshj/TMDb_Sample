@@ -180,7 +180,7 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
     @Override
     public void showMovieDetails(Movie movie, MovieListItemBinding B) {
         if (isTwoPane()) {
-            fragmentTwoPane = MovieDetailFragment.get(movie);
+            fragmentTwoPane = MovieDetailFragment.newInstance(movie);
 
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.movieDetailContainer, fragmentTwoPane)
