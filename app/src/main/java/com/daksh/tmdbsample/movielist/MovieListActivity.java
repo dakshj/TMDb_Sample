@@ -83,6 +83,15 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (isTwoPane() && fragmentTwoPane != null) {
+            dismissMovieDetails();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     private void setUpGrid() {
         adapter = new MovieListAdapter((movie, B) -> presenter.openMovieDetails(movie, B));
 
