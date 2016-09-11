@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
+import android.transition.ChangeImageTransform;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -191,9 +192,19 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
         if (isTwoPane()) {
             fragmentTwoPane = MovieDetailFragment.newInstance(movie);
 
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.movieDetailContainer, fragmentTwoPane)
-                    .commit();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                fragmentTwoPane.setSharedElementEnterTransition(new ChangeImageTransform());
+
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.movieDetailContainer, fragmentTwoPane)
+                        .addToBackStack(null)
+                        .addSharedElement(B.imagePoster, getString(R.string.poster_image_transition))
+                        .commit();
+            } else {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.movieDetailContainer, fragmentTwoPane)
+                        .commit();
+            }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 //Shared Element Transition of Poster Image from Master List to Detail screen
