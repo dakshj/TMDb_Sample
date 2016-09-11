@@ -39,11 +39,24 @@ in Unit Tests.
 [Robolectric](http://robolectric.org/)
 and
 [Mockito](http://mockito.org/)
-are used for Unit Tests on the JVM, and
+are used for Unit Tests on the JVM.
+[\[1\]](https://guides.codepath.com/android/Unit-Testing-with-Robolectric)
+
 [Espresso](https://google.github.io/android-testing-support-library/docs/espresso/index.html)
 is used for Instrumentation Tests.
-[\[1\]](https://guides.codepath.com/android/Unit-Testing-with-Robolectric)
-[\[2\]](https://github.com/googlesamples/android-architecture/tree/todo-mvp/todoapp/app/src/test/java/com/example/android/architecture/blueprints/todoapp)
+[\[1\]](http://google.github.io/android-testing-support-library/docs/espresso/cheatsheet/index.html)
+
+Google's
+[Android Architecture]
+(https://github.com/googlesamples/android-architecture)
+TODO App
+as an excellent reference for writing
+[Unit]
+(https://github.com/googlesamples/android-architecture/tree/todo-mvp/todoapp/app/src/test/java/com/example/android/architecture/blueprints/todoapp)
+and
+[Instrumentation]
+(https://github.com/googlesamples/android-architecture/tree/todo-mvp/todoapp/app/src/androidTest/java/com/example/android/architecture/blueprints/todoapp)
+tests on Android.
 
 ##Code Shrinking & Obfuscation
 ProGuard has been used for shrinking and obfuscation purposes.
