@@ -136,6 +136,7 @@ dependencies {
         exclude group: 'javax.inject'
     }
     androidTestCompile 'com.android.support.test.espresso:espresso-contrib:2.2.2'
+    androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2.2'
     androidTestCompile 'com.android.support.test:runner:0.5'
 
     //To resolve conflicts between main and test APK

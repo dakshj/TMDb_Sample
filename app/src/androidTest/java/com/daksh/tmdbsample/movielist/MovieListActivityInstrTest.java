@@ -1,10 +1,12 @@
 package com.daksh.tmdbsample.movielist;
 
+import android.content.ComponentName;
+import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.daksh.tmdbsample.R;
+import com.daksh.tmdbsample.moviedetail.MovieDetailActivity;
 
 import junit.framework.TestCase;
 
@@ -13,9 +15,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.RootMatchers.isDialog;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -30,8 +36,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class MovieListActivityInstrTest extends TestCase {
 
     @Rule
-    public final ActivityTestRule<MovieListActivity> rule =
-            new ActivityTestRule<>(MovieListActivity.class);
+    public final IntentsTestRule<MovieListActivity> rule =
+            new IntentsTestRule<>(MovieListActivity.class);
 
     private MovieListActivity activity;
 
@@ -41,7 +47,7 @@ public class MovieListActivityInstrTest extends TestCase {
     }
 
     @Test
-    public void shouldOpenSortingAlertDialogWhenSortMenuItemClicked() {
+    public void openSortingAlertDialogWhenSortMenuItemClicked() {
         onView(withId(R.id.menu_sort))
                 .perform(click());
 
@@ -51,7 +57,7 @@ public class MovieListActivityInstrTest extends TestCase {
     }
 
     @Test
-    public void shouldReloadListAfterSelectingOtherRadioButton() {
+    public void reloadListAfterSelectingOtherRadioButton() {
         //Reset check to Popular
         onView(withId(R.id.menu_sort))
                 .perform(click());
@@ -77,14 +83,20 @@ public class MovieListActivityInstrTest extends TestCase {
                 .check(matches(isDisplayed()));
     }
 
-//    @Test
-//    public void shouldShowToastAfterClickingOnListItem() {
-//        onView(withId(R.id.listMovie))
-//                .perform(actionOnItemAtPosition(0, click()));
-//
-//        onView(withText(startsWith("Clicked on ")))
-//                .inRoot(withDecorView(
-//                        not(is(activity.getWindow().getDecorView()))))
-//                .check(matches(isDisplayed()));
-//    }
+    @Test
+    public void openMovieDetailAfterClickingOnListItem() {
+        onView(withId(R.id.listMovie))
+                .perform(actionOnItemAtPosition(0, click()));
+
+        if (!activity.isTwoPane()) {
+            intended(hasComponent(new ComponentName(getTargetContext(), MovieDetailActivity.class)));
+        } else {
+            // If it is a two-pane layout, then both the list and detail will be visible
+            // on the same screen
+            onView(withId(R.id.listMovie))
+                    .check(matches(isDisplayed()));
+            onView(withId(R.id.movieDetailContainer))
+                    .check(matches(isDisplayed()));
+        }
+    }
 }
