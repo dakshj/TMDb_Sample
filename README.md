@@ -45,6 +45,11 @@ is used for Instrumentation Tests.
 [\[1\]](https://guides.codepath.com/android/Unit-Testing-with-Robolectric)
 [\[2\]](https://github.com/googlesamples/android-architecture/tree/todo-mvp/todoapp/app/src/test/java/com/example/android/architecture/blueprints/todoapp)
 
+##Code Shrinking & Obfuscation
+ProGuard has been used for shrinking and obfuscation purposes.
+
+[`proguard-rules.pro`](app/proguard-rules.pro) outlines all the rules required to be added for Android-related and third-party libraries.
+
 ##Continuous Integration
 [Travis CI](https://travis-ci.org/)
 has been used for adding CI to the project.
