@@ -3,6 +3,7 @@ package com.daksh.tmdbsample.movielist;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
@@ -24,9 +25,12 @@ import com.daksh.tmdbsample.moviedetail.MovieDetailActivity;
 import com.daksh.tmdbsample.moviedetail.MovieDetailFragment;
 import com.daksh.tmdbsample.util.EndlessRecyclerViewScrollListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import icepick.State;
 
 public class MovieListActivity extends BaseActivity implements MovieListContract.View {
 
@@ -34,6 +38,12 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
 
     @Inject
     MovieListPresenter presenter;
+
+    @State
+    ArrayList<Movie> movies;
+
+    @State
+    Movie selectedMovie;
 
     private boolean twoPane;
     private ActivityMovieListBinding B;
@@ -63,7 +73,21 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
 
         setUpErrorLayout();
 
-        presenter.start();
+        if (savedInstanceState == null || getMovies() == null) {
+            presenter.start();
+        } else {
+            adapter.setMovies(getMovies());
+
+            // If the app switches from a two-pane layout to a one-pane layout, or vice versa,
+            // after a configuration change, then update the UI accordingly.
+            if (isTwoPane()) {
+                if (getSelectedMovie() != null) {
+                    loadTwoPaneMovieDetails(getSelectedMovie());
+                }
+            } else {
+                setSelectedMovie(null);
+            }
+        }
     }
 
     @Override
@@ -122,7 +146,7 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
         return twoPane;
     }
 
-    public void setTwoPane(boolean twoPane) {
+    private void setTwoPane(boolean twoPane) {
         this.twoPane = twoPane;
     }
 
@@ -139,6 +163,9 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
     @Override
     public void showMovies(List<Movie> movies) {
         B.idViewAnimator.setDisplayedChildId(B.content.getId());
+
+        setMovies(movies);
+
         adapter.setMovies(movies);
     }
 
@@ -189,10 +216,12 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
 
     @Override
     public void showMovieDetails(Movie movie, MovieListItemBinding B) {
-        if (isTwoPane()) {
-            fragmentTwoPane = MovieDetailFragment.newInstance(movie);
+        setSelectedMovie(movie);
 
+        if (isTwoPane()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                fragmentTwoPane = MovieDetailFragment.newInstance(movie);
+
                 fragmentTwoPane.setSharedElementEnterTransition(new ChangeImageTransform());
 
                 getSupportFragmentManager().beginTransaction()
@@ -201,9 +230,7 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
                         .addSharedElement(B.imagePoster, getString(R.string.poster_image_transition))
                         .commit();
             } else {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.movieDetailContainer, fragmentTwoPane)
-                        .commit();
+                loadTwoPaneMovieDetails(movie);
             }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -217,6 +244,14 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
                 MovieDetailActivity.start(this, movie);
             }
         }
+    }
+
+    private void loadTwoPaneMovieDetails(@NonNull Movie movie) {
+        fragmentTwoPane = MovieDetailFragment.newInstance(movie);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.movieDetailContainer, fragmentTwoPane)
+                .commit();
     }
 
     @Override
@@ -259,5 +294,22 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
 
             fragmentTwoPane = null;
         }
+    }
+
+    private List<Movie> getMovies() {
+        return movies;
+    }
+
+    private void setMovies(List<Movie> movies) {
+        this.movies = new ArrayList<>();
+        this.movies.addAll(movies);
+    }
+
+    private Movie getSelectedMovie() {
+        return selectedMovie;
+    }
+
+    private void setSelectedMovie(Movie selectedMovie) {
+        this.selectedMovie = selectedMovie;
     }
 }
