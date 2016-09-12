@@ -3,6 +3,7 @@ package com.daksh.tmdbsample.movielist;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AlertDialog;
@@ -24,7 +25,6 @@ import com.daksh.tmdbsample.di.module.MovieListModule;
 import com.daksh.tmdbsample.moviedetail.MovieDetailActivity;
 import com.daksh.tmdbsample.moviedetail.MovieDetailFragment;
 import com.daksh.tmdbsample.util.EndlessRecyclerViewScrollListener;
-import com.daksh.tmdbsample.util.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +36,7 @@ import icepick.State;
 public class MovieListActivity extends BaseActivity implements MovieListContract.View {
 
     private static final int GRID_COLUMNS = 2;
+    private static final String STATE_RECYCLER_VIEW = "STATE_RECYCLER_VIEW";
 
     @Inject
     MovieListPresenter presenter;
@@ -80,23 +81,37 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
         if (savedInstanceState == null || getMovies() == null) {
             presenter.start();
         } else {
-            reloadStates();
+            reloadStates(savedInstanceState);
         }
     }
 
-    private void reloadStates() {
+    private void reloadStates(@NonNull Bundle savedInstanceState) {
+        // Restore data set
         adapter.setMovies(getMovies());
 
-        // If the app switches from a two-pane layout to a one-pane layout, or vice versa,
-        // after a configuration change, then update the UI accordingly.
+        // Restore movie details if in two-pane layout
         if (isTwoPane()) {
             if (getSelectedMovie() != null) {
                 loadTwoPaneMovieDetails(getSelectedMovie());
             }
         }
 
+        // Restore number of pages already loaded via endless scrolling
         if (currentPageIndex != -1) {
             scrollListener.setCurrentPageIndexAfterConfigurationChange(currentPageIndex);
+        }
+
+        // Restore RecyclerView's scroll state
+        // postDelayed with a 100ms delay worked more reliably that post
+        // Also, the delay is not visible
+        if (savedInstanceState.containsKey(STATE_RECYCLER_VIEW)) {
+            Parcelable state = savedInstanceState.getParcelable(STATE_RECYCLER_VIEW);
+
+            if (state != null) {
+                B.layoutMovieList.listMovie.postDelayed(() ->
+                        B.layoutMovieList.listMovie.getLayoutManager()
+                                .onRestoreInstanceState(state), 100);
+            }
         }
     }
 
@@ -127,15 +142,22 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable(STATE_RECYCLER_VIEW,
+                B.layoutMovieList.listMovie.getLayoutManager().onSaveInstanceState());
+
+        super.onSaveInstanceState(outState);
+    }
+
     private void setUpGrid() {
         adapter = new MovieListAdapter((movie, B) -> presenter.openMovieDetails(movie, B));
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, GRID_COLUMNS);
-
-        B.layoutMovieList.listMovie.setLayoutManager(gridLayoutManager);
+        B.layoutMovieList.listMovie.setLayoutManager(new GridLayoutManager(this, GRID_COLUMNS));
         B.layoutMovieList.listMovie.setAdapter(adapter);
 
-        scrollListener = new EndlessRecyclerViewScrollListener(gridLayoutManager) {
+        scrollListener = new EndlessRecyclerViewScrollListener(
+                (GridLayoutManager) B.layoutMovieList.listMovie.getLayoutManager()) {
             @Override
             public void onLoadMore(int pageIndex, int totalItemCount) {
                 currentPageIndex = pageIndex;
