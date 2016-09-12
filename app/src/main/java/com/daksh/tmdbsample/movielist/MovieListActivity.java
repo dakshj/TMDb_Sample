@@ -24,6 +24,7 @@ import com.daksh.tmdbsample.di.module.MovieListModule;
 import com.daksh.tmdbsample.moviedetail.MovieDetailActivity;
 import com.daksh.tmdbsample.moviedetail.MovieDetailFragment;
 import com.daksh.tmdbsample.util.EndlessRecyclerViewScrollListener;
+import com.daksh.tmdbsample.util.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,9 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
 
     @State
     Movie selectedMovie;
+
+    @State
+    int currentPageIndex = -1;
 
     private boolean twoPane;
     private ActivityMovieListBinding B;
@@ -76,17 +80,23 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
         if (savedInstanceState == null || getMovies() == null) {
             presenter.start();
         } else {
-            adapter.setMovies(getMovies());
+            reloadStates();
+        }
+    }
 
-            // If the app switches from a two-pane layout to a one-pane layout, or vice versa,
-            // after a configuration change, then update the UI accordingly.
-            if (isTwoPane()) {
-                if (getSelectedMovie() != null) {
-                    loadTwoPaneMovieDetails(getSelectedMovie());
-                }
-            } else {
-                setSelectedMovie(null);
+    private void reloadStates() {
+        adapter.setMovies(getMovies());
+
+        // If the app switches from a two-pane layout to a one-pane layout, or vice versa,
+        // after a configuration change, then update the UI accordingly.
+        if (isTwoPane()) {
+            if (getSelectedMovie() != null) {
+                loadTwoPaneMovieDetails(getSelectedMovie());
             }
+        }
+
+        if (currentPageIndex != -1) {
+            scrollListener.setCurrentPageIndexAfterConfigurationChange(currentPageIndex);
         }
     }
 
@@ -128,6 +138,7 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
         scrollListener = new EndlessRecyclerViewScrollListener(gridLayoutManager) {
             @Override
             public void onLoadMore(int pageIndex, int totalItemCount) {
+                currentPageIndex = pageIndex;
                 presenter.startNextPageLoad(pageIndex + 1);
             }
         };
@@ -274,7 +285,7 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
     @Override
     public void pageLoadingFailed(Integer page) {
         if (page != null && scrollListener != null) {
-            scrollListener.loadingFailed(page - 1);
+            currentPageIndex = scrollListener.loadingFailed(page - 1);
         }
     }
 

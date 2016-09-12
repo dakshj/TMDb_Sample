@@ -122,21 +122,35 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
     /**
      * Indicates that loading for the corresponding page index has failed
      *
-     * @param pageIndex
+     * @param pageIndex The page index for which loading failed.
+     * @return The current page index being internally maintained.
      */
-    public void loadingFailed(int pageIndex) {
+    public int loadingFailed(int pageIndex) {
         if (pageIndex == currentPageIndex) {
             currentPageIndex--;
             loading = false;
         }
+
+        return currentPageIndex;
     }
 
     /**
      * Set the last page index of this endless scrolling dataset.
      *
-     * @param lastPageIndex
+     * @param lastPageIndex THe last page's index.
      */
     public void setLastPageIndex(long lastPageIndex) {
         this.lastPageIndex = lastPageIndex;
+    }
+
+    /**
+     * Use this to set the current page's index after a configuration change has occured.
+     * Setting it incorrectly will result in either wrong page data being loaded,
+     * or no more data being loaded at all!
+     *
+     * @param currentPageIndex The current page's index.
+     */
+    public void setCurrentPageIndexAfterConfigurationChange(int currentPageIndex) {
+        this.currentPageIndex = currentPageIndex;
     }
 }
