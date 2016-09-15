@@ -49,10 +49,6 @@ public class MovieListPresenter extends BasePresenterImpl<MovieListContract.View
     private void loadMovies(final Integer page, final ListLoadType listLoadType) {
         SortOrder sortOrder = appSettings.getSortOrder();
 
-        if (listLoadType.value == ListLoadType.FIRST) {
-            getView().showLoading();
-        }
-
         Single<MovieListApiResponse> single = null;
 
         switch (sortOrder.value) {
@@ -71,6 +67,11 @@ public class MovieListPresenter extends BasePresenterImpl<MovieListContract.View
         }
 
         single.subscribeOn(Schedulers.io())
+                .doOnSubscribe(() -> {
+                    if (listLoadType.value == ListLoadType.FIRST) {
+                        getView().showLoading();
+                    }
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleSubscriber<MovieListApiResponse>() {
                     @Override
