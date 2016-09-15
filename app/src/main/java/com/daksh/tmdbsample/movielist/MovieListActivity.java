@@ -58,6 +58,7 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
     private MovieListAdapter adapter;
     private EndlessRecyclerViewScrollListener scrollListener;
     private MovieDetailFragment fragmentTwoPane;
+    private SearchView searchView;
 
     @Override
     public void injectActivity(AppComponent appComponent) {
@@ -124,8 +125,11 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
 
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+        searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        // Make the SearchView occupy the entire available width on the Toolbar
+        searchView.setMaxWidth(Integer.MAX_VALUE);
 
         return true;
     }
@@ -144,11 +148,19 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
 
     @Override
     public void onBackPressed() {
+        // Close the SearchView if open
+        if (searchView != null && !searchView.isIconified()) {
+            searchView.setIconified(true);
+            return;
+        }
+
+        // Close Movie Details if visible (in two-pane mode)
         if (isTwoPane() && fragmentTwoPane != null) {
             dismissMovieDetails();
-        } else {
-            super.onBackPressed();
+            return;
         }
+
+        super.onBackPressed();
     }
 
     @Override
