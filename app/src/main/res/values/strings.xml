@@ -16,5 +16,6 @@
     <string name="synopsis">Synopsis</string>
     <string name="userRating">User Rating</string>
     <string name="releaseDate">Release Date</string>
+    <string name="search">Search</string>
 
 </resources>
