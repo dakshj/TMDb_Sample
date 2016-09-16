@@ -163,7 +163,8 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
         RxMenuItemCompat.actionViewEvents(itemSearch)
                 .subscribe(menuItemActionViewEvent -> {
                     if (menuItemActionViewEvent.kind() == MenuItemActionViewEvent.Kind.COLLAPSE &&
-                            !TextUtils.isEmpty(getSearchQuery())) {
+                            !TextUtils.isEmpty(searchView.getQuery().toString())) {
+                        setSearchQuery("");
                         presenter.start();
                     }
                 });
@@ -249,6 +250,11 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
     @Override
     public void showError() {
         B.idViewAnimator.setDisplayedChildId(B.error.getId());
+    }
+
+    @Override
+    public void showEmpty() {
+        B.idViewAnimator.setDisplayedChildId(B.empty.getId());
     }
 
     @Override

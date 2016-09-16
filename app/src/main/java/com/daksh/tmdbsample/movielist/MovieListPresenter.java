@@ -89,6 +89,11 @@ public class MovieListPresenter extends BasePresenterImpl<MovieListContract.View
                 .subscribe(new SingleSubscriber<MovieListApiResponse>() {
                     @Override
                     public void onSuccess(MovieListApiResponse response) {
+                        if (response.getTotalResults() == 0) {
+                            getView().showEmpty();
+                            return;
+                        }
+
                         switch (listLoadType.value) {
                             case ListLoadType.FIRST:
                                 getView().showMovies(response.getMovies());

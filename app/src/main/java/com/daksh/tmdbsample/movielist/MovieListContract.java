@@ -19,6 +19,8 @@ public interface MovieListContract {
 
         void showError();
 
+        void showEmpty();
+
         void showMovies(List<Movie> movies);
 
         void addMovies(List<Movie> movies);
