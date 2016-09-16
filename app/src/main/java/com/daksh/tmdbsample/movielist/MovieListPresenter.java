@@ -1,6 +1,7 @@
 package com.daksh.tmdbsample.movielist;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.daksh.tmdbsample.base.BasePresenterImpl;
 import com.daksh.tmdbsample.data.intdef.ListLoadType;
@@ -11,6 +12,11 @@ import com.daksh.tmdbsample.data.source.local.AppSettings;
 import com.daksh.tmdbsample.data.source.remote.TmdbApi;
 import com.daksh.tmdbsample.databinding.MovieListItemBinding;
 import com.daksh.tmdbsample.di.scope.ActivityScope;
+
+import org.apache.commons.codec.CharEncoding;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import javax.inject.Inject;
 
@@ -43,22 +49,31 @@ public class MovieListPresenter extends BasePresenterImpl<MovieListContract.View
 
     @Override
     public void start() {
-        loadMovies(null, new ListLoadType(ListLoadType.FIRST));
+        loadMovies(getView().getSearchQuery(), null, new ListLoadType(ListLoadType.FIRST));
     }
 
-    private void loadMovies(final Integer page, final ListLoadType listLoadType) {
-        SortOrder sortOrder = appSettings.getSortOrder();
-
+    private void loadMovies(final String query, final Integer page,
+            final ListLoadType listLoadType) {
         Single<MovieListApiResponse> single = null;
 
-        switch (sortOrder.value) {
-            case SortOrder.POPULAR:
-                single = api.popular(page);
-                break;
+        if (TextUtils.isEmpty(query)) {
+            SortOrder sortOrder = appSettings.getSortOrder();
 
-            case SortOrder.TOP_RATED:
-                single = api.topRated(page);
-                break;
+            switch (sortOrder.value) {
+                case SortOrder.POPULAR:
+                    single = api.popular(page);
+                    break;
+
+                case SortOrder.TOP_RATED:
+                    single = api.topRated(page);
+                    break;
+            }
+        } else {
+            try {
+                single = api.search(URLEncoder.encode(query, CharEncoding.UTF_8), page);
+            } catch (UnsupportedEncodingException ignored) {
+                getView().showError();
+            }
         }
 
         if (single == null) {
@@ -132,17 +147,22 @@ public class MovieListPresenter extends BasePresenterImpl<MovieListContract.View
 
         if (currentSortOrder.value != sortOrder.value) {
             appSettings.setSortOrder(sortOrder);
-            loadMovies(null, new ListLoadType(ListLoadType.FIRST));
+
+            if (getView().isSearchOpened()) {
+                getView().dismissSearch();
+            }
+
+            loadMovies(null, null, new ListLoadType(ListLoadType.FIRST));
         }
     }
 
     @Override
     public void startSwipeRefresh() {
-        loadMovies(null, new ListLoadType(ListLoadType.SWIPE_REFRESH));
+        loadMovies(getView().getSearchQuery(), null, new ListLoadType(ListLoadType.SWIPE_REFRESH));
     }
 
     @Override
     public void startNextPageLoad(Integer page) {
-        loadMovies(page, new ListLoadType(ListLoadType.ENDLESS_SCROLL));
+        loadMovies(getView().getSearchQuery(), page, new ListLoadType(ListLoadType.ENDLESS_SCROLL));
     }
 }

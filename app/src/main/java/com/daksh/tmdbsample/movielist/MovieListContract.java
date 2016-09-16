@@ -38,6 +38,12 @@ public interface MovieListContract {
         void setTotalListPages(long totalPages);
 
         void dismissMovieDetails();
+
+        boolean isSearchOpened();
+
+        void dismissSearch();
+
+        String getSearchQuery();
     }
 
     interface Presenter extends BasePresenter<View> {
