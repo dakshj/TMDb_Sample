@@ -16,4 +16,7 @@ public interface TmdbApi {
 
     @GET("movie/top_rated")
     Single<MovieListApiResponse> topRated(@Query("page") Integer page);
+
+    @GET("search/movie/")
+    Single<MovieListApiResponse> search(@Query("query") String query, @Query("page") Integer page);
 }
