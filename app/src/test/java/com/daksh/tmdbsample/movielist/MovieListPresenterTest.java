@@ -55,7 +55,7 @@ public class MovieListPresenterTest {
     Gson gson;
 
     @InjectMocks
-    MovieListContract.Presenter presenter;
+    MovieListPresenter presenter;
 
     @Before
     public void setUp() {
