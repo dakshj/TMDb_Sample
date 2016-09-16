@@ -13,8 +13,6 @@ import com.daksh.tmdbsample.data.source.remote.TmdbApi;
 import com.daksh.tmdbsample.databinding.MovieListItemBinding;
 import com.daksh.tmdbsample.di.scope.ActivityScope;
 
-import org.apache.commons.codec.CharEncoding;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -70,7 +68,7 @@ public class MovieListPresenter extends BasePresenterImpl<MovieListContract.View
             }
         } else {
             try {
-                single = api.search(URLEncoder.encode(query, CharEncoding.UTF_8), page);
+                single = api.search(URLEncoder.encode(query, "UTF-8"), page);
             } catch (UnsupportedEncodingException ignored) {
                 getView().showError();
             }
