@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
+import android.widget.EditText;
 
 import com.daksh.tmdbsample.R;
 import com.daksh.tmdbsample.moviedetail.MovieDetailActivity;
@@ -18,11 +19,13 @@ import org.junit.runner.RunWith;
 import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.RootMatchers.isDialog;
+import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -78,7 +81,15 @@ public class MovieListActivityTest extends TestCase {
         onView(withText(R.string.save))
                 .perform(click());
 
-        //Requires Internet to pass
+        checkContentDisplayed();
+    }
+
+    /**
+     * Checks if the content is displayed.
+     * <p>
+     * Requires Internet to pass.
+     */
+    private void checkContentDisplayed() {
         onView(withId(R.id.content))
                 .check(matches(isDisplayed()));
     }
@@ -98,5 +109,25 @@ public class MovieListActivityTest extends TestCase {
             onView(withId(R.id.movieDetailContainer))
                     .check(matches(isDisplayed()));
         }
+    }
+
+    @Test
+    public void searchForMovie() {
+        // Open the SearchView
+        onView(withId(R.id.menu_search))
+                .perform(click());
+
+        // Search for "Inception"
+        onView(isAssignableFrom(EditText.class))
+                .perform(typeText("Inception"));
+
+        // Wait for the query to run
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        checkContentDisplayed();
     }
 }

@@ -44,6 +44,11 @@ import rx.android.schedulers.AndroidSchedulers;
 
 public class MovieListActivity extends BaseActivity implements MovieListContract.View {
 
+    /**
+     * Defines the duration to wait (in millis) before automatically running a query
+     */
+    public static final long QUERY_TYPING_RUN_WAIT_MILLIS = 1000;
+
     private static final int GRID_COLUMNS = 2;
     private static final String STATE_RECYCLER_VIEW = "STATE_RECYCLER_VIEW";
 
@@ -150,7 +155,7 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
 
         // Perform a search automatically after 1 second of no typing
         RxSearchView.queryTextChanges(searchView)
-                .debounce(1, TimeUnit.SECONDS)
+                .debounce(QUERY_TYPING_RUN_WAIT_MILLIS, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(charSequence -> {
                     if (!getSearchQuery().equals(charSequence.toString())) {
