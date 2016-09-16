@@ -1,6 +1,7 @@
 package com.daksh.tmdbsample.di.module;
 
 import com.daksh.tmdbsample.BuildConfig;
+import com.daksh.tmdbsample.data.model.Movie;
 import com.daksh.tmdbsample.data.source.remote.TmdbApi;
 import com.daksh.tmdbsample.data.source.remote.interceptor.ApiKeyInsertionInterceptor;
 import com.daksh.tmdbsample.data.source.remote.interceptor.LanguageCodeInsertionInterceptor;
@@ -8,7 +9,10 @@ import com.daksh.tmdbsample.util.Logger;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -86,9 +90,17 @@ public class NetworkModule {
     @Provides
     @Singleton
     Gson provideGson() {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
-        return gsonBuilder.create();
+        return new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .registerTypeAdapter(Date.class,
+                        (JsonDeserializer<Date>) (json, typeOfT, context) -> {
+                            try {
+                                return Movie.DATE_FORMAT.parse(json.getAsString());
+                            } catch (ParseException e) {
+                                return null;
+                            }
+                        })
+                .create();
     }
 
     @Provides

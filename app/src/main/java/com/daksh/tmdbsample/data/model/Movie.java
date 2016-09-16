@@ -11,6 +11,7 @@ import com.squareup.picasso.Picasso;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -43,6 +44,12 @@ public class Movie implements Parcelable {
      * (Width / Height) Aspect Ratio of Backdrop Image
      */
     public static final double BACKDROP_IMAGE_ASPECT_RATIO = 1.77;
+
+    /**
+     * Date format used for parsing JSON to Date object
+     */
+    public static final DateFormat DATE_FORMAT =
+            new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
     /**
      * Poster Image Quality in terms of width in px

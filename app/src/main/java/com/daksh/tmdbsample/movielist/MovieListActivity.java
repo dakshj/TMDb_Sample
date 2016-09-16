@@ -1,5 +1,7 @@
 package com.daksh.tmdbsample.movielist;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,6 +10,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
 import android.transition.ChangeImageTransform;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,13 +29,18 @@ import com.daksh.tmdbsample.di.module.MovieListModule;
 import com.daksh.tmdbsample.moviedetail.MovieDetailActivity;
 import com.daksh.tmdbsample.moviedetail.MovieDetailFragment;
 import com.daksh.tmdbsample.util.EndlessRecyclerViewScrollListener;
+import com.jakewharton.rxbinding.support.v4.view.RxMenuItemCompat;
+import com.jakewharton.rxbinding.support.v7.widget.RxSearchView;
+import com.jakewharton.rxbinding.view.MenuItemActionViewEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import icepick.State;
+import rx.android.schedulers.AndroidSchedulers;
 
 public class MovieListActivity extends BaseActivity implements MovieListContract.View {
 
@@ -39,7 +48,7 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
     private static final String STATE_RECYCLER_VIEW = "STATE_RECYCLER_VIEW";
 
     @Inject
-    MovieListPresenter presenter;
+    MovieListContract.Presenter presenter;
 
     @State
     ArrayList<Movie> movies;
@@ -50,11 +59,15 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
     @State
     int currentPageIndex = -1;
 
+    @State
+    String searchQuery = "";
+
     private boolean twoPane;
     private ActivityMovieListBinding B;
     private MovieListAdapter adapter;
     private EndlessRecyclerViewScrollListener scrollListener;
     private MovieDetailFragment fragmentTwoPane;
+    private MenuItem itemSearch;
 
     @Override
     public void injectActivity(AppComponent appComponent) {
@@ -118,6 +131,43 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_movie_list_menu, menu);
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+
+        itemSearch = menu.findItem(R.id.menu_search);
+        SearchView searchView = (SearchView) itemSearch.getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        // Make the SearchView occupy the entire available width on the Toolbar
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+
+        // Restore state of SearchView after configuration changes
+        if (!TextUtils.isEmpty(getSearchQuery())) {
+            itemSearch.expandActionView();
+            searchView.setQuery(getSearchQuery(), false);
+        }
+
+        // Perform a search automatically after 1 second of no typing
+        RxSearchView.queryTextChanges(searchView)
+                .debounce(1, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(charSequence -> {
+                    if (!getSearchQuery().equals(charSequence.toString())) {
+                        setSearchQuery(charSequence.toString());
+                        presenter.start();
+                    }
+                });
+
+        // Reload default list after the SearchView is closed
+        RxMenuItemCompat.actionViewEvents(itemSearch)
+                .subscribe(menuItemActionViewEvent -> {
+                    if (menuItemActionViewEvent.kind() == MenuItemActionViewEvent.Kind.COLLAPSE &&
+                            !TextUtils.isEmpty(getSearchQuery())) {
+                        presenter.start();
+                    }
+                });
+
         return true;
     }
 
@@ -135,11 +185,19 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
 
     @Override
     public void onBackPressed() {
+        // Close the SearchView if open
+        if (itemSearch != null && !itemSearch.isActionViewExpanded()) {
+            itemSearch.collapseActionView();
+            return;
+        }
+
+        // Close Movie Details if visible (in two-pane mode)
         if (isTwoPane() && fragmentTwoPane != null) {
             dismissMovieDetails();
-        } else {
-            super.onBackPressed();
+            return;
         }
+
+        super.onBackPressed();
     }
 
     @Override
@@ -344,5 +402,28 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
 
     private void setSelectedMovie(Movie selectedMovie) {
         this.selectedMovie = selectedMovie;
+    }
+
+    @Override
+    public boolean isSearchOpened() {
+        return itemSearch != null && itemSearch.isActionViewExpanded();
+    }
+
+    @Override
+    public void dismissSearch() {
+        setSearchQuery("");
+
+        if (itemSearch != null && itemSearch.isActionViewExpanded()) {
+            itemSearch.collapseActionView();
+        }
+    }
+
+    @Override
+    public String getSearchQuery() {
+        return searchQuery;
+    }
+
+    private void setSearchQuery(@NonNull String searchQuery) {
+        this.searchQuery = searchQuery;
     }
 }
