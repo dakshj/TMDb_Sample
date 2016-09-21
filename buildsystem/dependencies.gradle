@@ -1,0 +1,54 @@
+allprojects {
+    repositories {
+        jcenter()
+        maven { url "https://clojars.org/repo/" }
+    }
+}
+
+ext {
+    // Android
+    compileSdkVersion = 24
+    buildToolsVersion = "23.0.3"
+    minSdkVersion = 16
+    targetSdkVersion = 24
+
+    // UI
+    collapsingAvatarToolbarVersion = "1.0.0"
+
+    // Support
+    supportLibraryVersion = "24.2.1"
+
+    // Networking
+    retrofitVersion = "2.1.0"
+    gsonVersion = "2.7"
+    okHttpVersion = "3.4.1"
+    picassoVersion = "2.5.2"
+
+    // ReactiveX
+    rxJavaVersion = "1.2.0"
+    rxJavaProGuardRulesVersion = "$rxJavaVersion.0"
+    rxAndroidVersion = "1.2.1"
+    rxBindingVersion = "0.4.0"
+
+    // Dependency Injection
+    daggerVersion = "2.6.1"
+    guavaVersion = "19.0"
+    jsr250Version = "1.0"
+
+    // Analytics
+    crashlyticsVersion = "2.6.2"
+
+    // Miscellaneous
+    eventBusVersion = "3.0.0"
+    icepickVersion = "3.2.0"
+
+    // Unit Testing
+    jUnitVersion = "4.12"
+    mockitoVersion = "1.10.19"
+    robolectricVersion = "3.1.2"
+    hamcrestVersion = "1.3"
+    powerMockVersion = "1.6.5"
+
+    // Instrumentation Testing
+    espressoVersion = "2.2.2"
+}
