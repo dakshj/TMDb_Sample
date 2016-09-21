@@ -25,7 +25,7 @@ ext {
     picassoVersion = "2.5.2"
 
     // ReactiveX
-    rxJavaVersion = "1.2.0"
+    rxJavaVersion = "1.1.9"
     rxJavaProGuardRulesVersion = "$rxJavaVersion.0"
     rxAndroidVersion = "1.2.1"
     rxBindingVersion = "0.4.0"
