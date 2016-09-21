@@ -28,7 +28,7 @@ public class MovieDetailFragment extends BaseFragment implements MovieDetailCont
     public static final String ARG_MOVIE = "movie";
 
     @Inject
-    MovieDetailPresenter presenter;
+    MovieDetailContract.Presenter presenter;
 
     private Movie movie;
     private MovieDetailBinding B;

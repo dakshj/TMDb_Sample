@@ -11,12 +11,9 @@ import com.daksh.tmdbsample.data.model.MovieListApiResponse;
 import com.daksh.tmdbsample.data.source.local.AppSettings;
 import com.daksh.tmdbsample.data.source.remote.TmdbApi;
 import com.daksh.tmdbsample.databinding.MovieListItemBinding;
-import com.daksh.tmdbsample.di.scope.ActivityScope;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-
-import javax.inject.Inject;
 
 import rx.Single;
 import rx.SingleSubscriber;
@@ -26,8 +23,6 @@ import rx.schedulers.Schedulers;
 /**
  * Created by daksh on 03-Sep-16.
  */
-
-@ActivityScope
 public class MovieListPresenter extends BasePresenterImpl<MovieListContract.View>
         implements MovieListContract.Presenter {
 
@@ -37,7 +32,6 @@ public class MovieListPresenter extends BasePresenterImpl<MovieListContract.View
     @NonNull
     private final AppSettings appSettings;
 
-    @Inject
     public MovieListPresenter(@NonNull MovieListContract.View view,
             @NonNull TmdbApi api, @NonNull AppSettings appSettings) {
         attachView(view);

@@ -2,6 +2,7 @@ package com.daksh.tmdbsample.di.module;
 
 import com.daksh.tmdbsample.di.scope.ActivityScope;
 import com.daksh.tmdbsample.moviedetail.MovieDetailContract;
+import com.daksh.tmdbsample.moviedetail.MovieDetailPresenter;
 
 import dagger.Module;
 import dagger.Provides;
@@ -23,5 +24,11 @@ public class MovieDetailModule {
     @ActivityScope
     MovieDetailContract.View provideMovieDetailView() {
         return view;
+    }
+
+    @Provides
+    @ActivityScope
+    MovieDetailContract.Presenter provideMovieDetailPresenter() {
+        return new MovieDetailPresenter(view);
     }
 }
