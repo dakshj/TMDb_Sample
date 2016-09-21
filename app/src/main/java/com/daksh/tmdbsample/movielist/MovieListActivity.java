@@ -192,7 +192,7 @@ public class MovieListActivity extends BaseActivity implements MovieListContract
     @Override
     public void onBackPressed() {
         // Close the SearchView if open
-        if (itemSearch != null && !itemSearch.isActionViewExpanded()) {
+        if (itemSearch != null && itemSearch.isActionViewExpanded()) {
             itemSearch.collapseActionView();
             return;
         }
