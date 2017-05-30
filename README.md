@@ -1,13 +1,13 @@
-#The Movie Database ([TMDb](https://www.themoviedb.org/)) Sample Android App [![Build Status](https://travis-ci.org/dakshj/TMDb_Sample.svg?branch=master)](https://travis-ci.org/dakshj/TMDb_Sample)
+# The Movie Database ([TMDb](https://www.themoviedb.org/)) Sample Android App [![Build Status](https://travis-ci.org/dakshj/TMDb_Sample.svg?branch=master)](https://travis-ci.org/dakshj/TMDb_Sample)
 
-##Architectural Pattern
+## Architectural Pattern
 The Model-View-Presenter architectural pattern has been used to build this app.
 [\[1\]](https://github.com/googlesamples/android-architecture/tree/todo-mvp/)
 [\[2.a\]](http://fernandocejas.com/2014/09/03/architecting-android-the-clean-way/)
 [\[2.b\]](http://fernandocejas.com/2015/07/18/architecting-android-the-evolution/)
 [\[3\]](http://engineering.remind.com/android-code-that-scales/)
 
-##Dependency Injection
+## Dependency Injection
 Dagger 2 is used as a DI library.
 [\[1\]](https://github.com/codepath/android_guides/wiki/Dependency-Injection-with-Dagger-2)
 [\[2\]](http://fernandocejas.com/2015/04/11/tasting-dagger-2-on-android/)
@@ -22,7 +22,7 @@ Each `View` has its own `@Module` and `@Subcomponent`.
 A `Presenter` is then `@Inject`ed into the implementation of the `View` (i.e., `Activity`, `Fragment`, etc.).
 [\[1\]](http://www.technicaladvices.com/2016/04/07/dagger-2-mvp-and-unit-testing-android-di-part-3/)
 
-##Networking & Reactive Execution
+## Networking & Reactive Execution
 [Retrofit](http://square.github.io/retrofit/)
 has been used in conjuction with
 [RxJava](https://github.com/ReactiveX/RxJava)
@@ -35,7 +35,7 @@ Gson is also used via DI to parse sample responses into
 [`MovieListApiResponse`](app/src/main/java/com/daksh/tmdbsample/data/model/MovieListApiResponse.java)
 in Unit Tests.
 
-##Testing
+## Testing
 [Robolectric](http://robolectric.org/)
 and
 [Mockito](http://mockito.org/)
@@ -47,30 +47,27 @@ is used for Instrumentation Tests.
 [\[1\]](http://google.github.io/android-testing-support-library/docs/espresso/cheatsheet/index.html)
 
 Google's
-[Android Architecture]
-(https://github.com/googlesamples/android-architecture)
+[Android Architecture](https://github.com/googlesamples/android-architecture)
 TODO App
 as an excellent reference for writing
-[Unit]
-(https://github.com/googlesamples/android-architecture/tree/todo-mvp/todoapp/app/src/test/java/com/example/android/architecture/blueprints/todoapp)
+[Unit](https://github.com/googlesamples/android-architecture/tree/todo-mvp/todoapp/app/src/test/java/com/example/android/architecture/blueprints/todoapp)
 and
-[Instrumentation]
-(https://github.com/googlesamples/android-architecture/tree/todo-mvp/todoapp/app/src/androidTest/java/com/example/android/architecture/blueprints/todoapp)
+[Instrumentation](https://github.com/googlesamples/android-architecture/tree/todo-mvp/todoapp/app/src/androidTest/java/com/example/android/architecture/blueprints/todoapp)
 tests on Android.
 
-##Code Shrinking & Obfuscation
+## Code Shrinking & Obfuscation
 ProGuard has been used for shrinking and obfuscation purposes.
 
 [`proguard-rules.pro`](app/proguard-rules.pro) outlines all the rules required to be added for Android-related and third-party libraries.
 
-##Continuous Integration
+## Continuous Integration
 [Travis CI](https://travis-ci.org/)
 has been used for adding CI to the project.
 [\[1\]](https://guides.codepath.com/android/Setting-up-Travis-CI)
 [\[2\]](https://guides.codepath.com/android/Setting-up-Travis-CI#troubleshooting)
 
 
-##License
+## License
 
     Copyright 2016 Daksh Jotwani
 
